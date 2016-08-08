@@ -50,7 +50,8 @@ class Article {
 
     /**
      * @ORM\Column(type="string")
-     * @ORM\ManyToMany(targetEntity="")
+     * @ORM\ManyToMany(targetEntity="Category")
+     * @ORM\JoinTable(name="article_categories", joinColumns={@ORM\JoinColumn(name="")})
      */
     private $category;
 

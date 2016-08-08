@@ -16,8 +16,9 @@ class Category {
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\ManyToMany(targetEntity="Article", mappedBy="id")
+     * @ORM\JoinColumn(name="id", referencedColumnName="category")
      */
-
     private $id;
 
     /**
