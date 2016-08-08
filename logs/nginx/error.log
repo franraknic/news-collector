@@ -1,0 +1,3 @@
+2016/08/08 08:20:15 [emerg] 1#0: no port in upstream "upstream" in /etc/nginx/conf.d/symfony.conf:15
+2016/08/08 08:23:12 [emerg] 1#0: no port in upstream "upstream" in /etc/nginx/conf.d/symfony.conf:15
+2016/08/08 08:31:51 [emerg] 1#0: no port in upstream "upstream" in /etc/nginx/conf.d/symfony.conf:15
