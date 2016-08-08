@@ -35,5 +35,5 @@
 # Composer PHAR
 /composer.phar
 
-LICENCE
-READDME.md
+/LICENSE
+/README.md
