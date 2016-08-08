@@ -1,7 +1,8 @@
 # Cache, session files and logs (Symfony3)
-/var/cache/*
-/var/logs/*
+/var/cache/**
+/var/logs/**
 /var/sessions/*
+var/*
 !var/cache/.gitkeep
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
@@ -38,5 +39,3 @@
 /docker-compose.override.yml
 /.idea/
 /var/mysql/
-/var/cache/
-/var/logs/
