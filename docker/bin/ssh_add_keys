@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Finds private keys in home/.ssh and adds them to ssh_agent container.
+
+FOUNDKEYS=$(grep -rl 'BEGIN .* PRIVATE KEY' ${HOME}/.ssh)
+
+KEYS=()
+for KEY in $FOUNDKEYS; do
+    KEYS+="/ssh/$(basename "$KEY") "
+done
+
+docker-compose run --no-deps --rm ssh_add_key ssh-add $KEYS

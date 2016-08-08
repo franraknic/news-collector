@@ -2,34 +2,53 @@ version: '2'
 
 services:
 
-    db:
-        image: mysql
-        ports:
-            - "13306:3306"
-        volumes:
-          - ./var/mysql:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: symfony
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
+  # SSH Agent container
+  ssh_agent:
+    build: docker/ssh_agent
 
-    php:
-        build: ./docker/php-fpm
-        expose:
-            - 9000
-        volumes:
-          - ./:/var/www
-        links:
-            - db
+  # SSH Add Keys container
+  ssh_add_key:
+    build: docker/ssh_agent
+    volumes:
+      - ~/.ssh:/ssh
+    volumes_from:
+      - ssh_agent
 
-    nginx:
-        build: ./docker/nginx
-        ports:
-            - 80:80
-        expose:
-            - 80
-        links:
-            - php
-        volumes_from:
-            - php
+  # SSH Daemon container for Xdebug tunnel
+  sshd:
+    build:
+      context: docker/sshd
+      dockerfile: Dockerfile
+
+  # PHP-FPM Container
+  php:
+    build:
+      context: docker/php
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+    volumes_from:
+      - ssh_agent
+    environment:
+      SSH_AUTH_SOCK: /root/.ssh/socket
+
+  # Nginx HTTP dameon container
+  nginx:
+    build:
+      context: docker/nginx
+      dockerfile: Dockerfile
+    volumes_from:
+      - php
+    environment:
+      NGINX_HOST: boilerplate.loc
+      PHP_INDEX: app_dev.php
+    links:
+      - php
+
+  # Redis container
+  redis:
+    build:
+      context: docker/redis
+      dockerfile: Dockerfile
+    volumes:
+      - ./var/redis:/data
