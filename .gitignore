@@ -38,3 +38,5 @@
 /docker-compose.override.yml
 /.idea/
 /var/mysql/
+/var/cache/
+/var/logs/
