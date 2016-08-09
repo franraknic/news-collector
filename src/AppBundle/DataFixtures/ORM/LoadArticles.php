@@ -17,9 +17,9 @@ class LoadArticleData implements FixtureInterface{
 
         $dummyArticle = new Article();
         $dummyArticle->setTitle('Senzacionalna vijest');
-        $dummyArticle->setContent('Najgore napisani članak ikad.');
+        $dummyArticle->setContent('Najgore napisani clanak ikad.');
         $dummyArticle->setSource('24Sata');
-        $dummyArticle->setCategories(['Žutilo', 'Politika']);
+        $dummyArticle->setCategories(['Zutilo', 'Politika']);
         $dummyArticle->setVisible(True);
 
         $manager->persist($dummyArticle);
