@@ -3,11 +3,13 @@
 namespace Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection; // generiranje konstruktora?
 
 /**
  * Class Category
  * @package Entity\Entity
- * @ORM\Entity(name="category")
+ * @ORM\Entity
+ * @ORM\Table(name="category")
  */
 
 class Category {
@@ -16,20 +18,19 @@ class Category {
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\ManyToMany(targetEntity="Article", mappedBy="id")
-     * @ORM\JoinColumn(name="id", referencedColumnName="category")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity="Article", inversedBy="categories")
+     */
+    private $articles;
 
     /**
      * @ORM\Column(type="string")
      */
     private $name;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $article_num;
 
     /**
      * @ORM\Column(type="boolean")

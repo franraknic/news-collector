@@ -3,23 +3,26 @@
 namespace Entity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection; // generiranje konstruktora?
 
 /**
  * Class Article
  * @package Entity\Entity
- * @ORM\Entity(name="article")
+ * @ORM\Entity
+ * @ORM\Table(name="article")
  */
 
 class Article {
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
     private $title;
 
@@ -36,24 +39,24 @@ class Article {
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_publshed;
+    private $datePublshed;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_scraped;
+    private $dateScraped;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $media_link;
+    private $mediaLink;
 
     /**
-     * @ORM\Column(type="string")
-     * @ORM\ManyToMany(targetEntity="Category")
-     * @ORM\JoinTable(name="article_categories", joinColumns={@ORM\JoinColumn(name="")})
+     * @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity="Category", mappedBy="articles")
+     * @ORM\JoinTable(name="article_categories")
      */
-    private $category;
+    private $categories;
 
     /**
      * @ORM\Column(type="string")
