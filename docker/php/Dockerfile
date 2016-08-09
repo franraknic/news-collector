@@ -6,7 +6,8 @@ MAINTAINER Davor Plehati <davor.plehati@trikoder.net>
 RUN apt-get update && apt-get install -y \
     apt-utils \
     curl \
-    git
+    git \
+    acl
 
 # PHP
 RUN apt-get install -y \
@@ -38,6 +39,9 @@ COPY etc/php.d/*.ini /etc/php5/mods-available/
 
 # Configure PHP-FPM
 RUN /config.sh
+
+# Add user
+RUN adduser --disabled-password --gecos "" symfony
 
 WORKDIR /var/www
 
