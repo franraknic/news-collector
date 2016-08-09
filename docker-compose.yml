@@ -30,7 +30,7 @@ services:
     volumes_from:
       - ssh_agent
     environment:
-      SSH_AUTH_SOCK: /root/.ssh/socket
+      SSH_AUTH_SOCK: /home/symfony/.ssh/socket
 
   # Nginx HTTP dameon container
   nginx:
