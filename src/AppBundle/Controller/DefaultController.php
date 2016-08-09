@@ -14,8 +14,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
 
-        //$em = $this->getDoctrine()->getRepository('AppBundle:Article')->findAll();
-        //$title = $em->getTitle();
+        $em = $this->getDoctrine()->getRepository('AppBundle:Article')->findAll();
 
         return $this->render('default/public.html.twig');
     }
