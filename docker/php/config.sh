@@ -12,5 +12,6 @@ sed -i '/^listen/clisten = [::]:9000' /etc/php5/fpm/pool.d/www.conf
 sed -i '/^listen.allowed_clients/c;listen.allowed_clients =' /etc/php5/fpm/pool.d/www.conf
 sed -i '/^;catch_workers_output/ccatch_workers_output = yes' /etc/php5/fpm/pool.d/www.conf
 sed -i -e 's/php_admin_value\[error_log\]\s*=.*/php_admin_value\[error_log\] = \/proc\/self\/fd\/2/g' /etc/php5/fpm/pool.d/www.conf
+
 sed -i 's/user = www-data/user = symfony/g' /etc/php5/fpm/pool.d/www.conf
 sed -i 's/group = www-data/group = symfony/g' /etc/php5/fpm/pool.d/www.conf
