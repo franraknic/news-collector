@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection; // generiranje konstruktora?
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Category
@@ -36,6 +36,11 @@ class Category {
      */
     private $visible;
 
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -55,7 +60,9 @@ class Category {
      */
     public function setArticles($articles)
     {
-        $this->articles = $articles;
+        foreach ($articles as $article){
+            $articles[] = $article;
+        }
 
         return $this;
     }
@@ -67,7 +74,11 @@ class Category {
      */
     public function getArticles()
     {
-        return $this->articles;
+        $articles = new ArrayCollection();
+        foreach ($this->articles as $article){
+            $articles[] = $article;
+        }
+        return $articles;
     }
 
     /**
