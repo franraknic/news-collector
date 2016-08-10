@@ -17,6 +17,7 @@ var/*
 /bin/*
 !bin/console
 !bin/symfony_requirements
+!bin/dbreset.sh
 /vendor/
 
 # Assets and user uploads
