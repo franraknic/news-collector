@@ -12,7 +12,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 
     public function load(ObjectManager $manager){
 
-        for ($i = 1; $i <= 40; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
 
             $faker = Faker\Factory::create();
 
