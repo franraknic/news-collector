@@ -24,7 +24,7 @@ class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface
             $dummyArticle->setTitle($faker->streetName);
             $dummyArticle->setContent($faker->text($maxNbChars = 200));
             $dummyArticle->setSource($faker->domainName);
-            $dummyArticle->setVisible(True);
+            $dummyArticle->setVisible(rand(0,1));
             $dummyArticle->setDateScraped($faker->dateTime($max = 'now'));
             $dummyArticle->setDatePublished($faker->dateTime($max = 'now'));
             $dummyArticle->setLink($faker->url);
