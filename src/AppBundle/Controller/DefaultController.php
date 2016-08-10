@@ -13,9 +13,21 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Article');
+        $articles = $rep->findAll();
 
-        $em = $this->getDoctrine()->getRepository('AppBundle:Article')->findAll();
+        return $this->render('default/public.html.twig', array('articles' => $articles));
+    }
 
-        return $this->render('default/public.html.twig');
+    /**
+     * @Route("/cat/{category}", name="category")
+     */
+    public function categoryAction(Request $request, $category)
+    {
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Category');
+
+        $cat = $rep->findOneBy(array('name' => $category));
+
+        return $this->render('default/public.html.twig', array('articles' => $cat->getArticles()));
     }
 }

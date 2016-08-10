@@ -1,4 +1,22 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    welcome
+    {% for article in articles %}
+        {% if article.visible == true %}
+            <h1>
+                {{ article.title }}
+            </h1>
+            <div>
+                {{ article.content }}
+            </div>
+            <br>
+            <p>
+                Objavljeno: {{ article.datePublished|date('d.m.Y.') }}
+            </p>
+            <p>
+                tagovi: {% for category in article.categories %}
+                    {{ category.name }}
+            {% endfor %}
+            <br> izvor:<a href="{{ article.link }}" >{{ article.source }}</a></p>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
