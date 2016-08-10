@@ -53,8 +53,7 @@ class Category {
     /**
      * Set articles
      *
-     * @param array $articles
-     *
+     * @param Article $article
      * @return Category
      */
     public function addArticle(Article $article)

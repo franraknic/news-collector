@@ -9,26 +9,24 @@ use AppBundle\Entity\Article;
 use Faker;
 
 
-
-
-
 class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface{
 
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < 500; $i++) {
 
-            $faker = Faker\Factory::create();
+            $faker = Faker\Factory::create('hr_HR');
 
             $dummyArticle = new Article();
-            $dummyArticle->setTitle($faker->streetName);
+            $dummyArticle->setTitle($faker->lastName);
             $dummyArticle->setContent($faker->text($maxNbChars = 200));
             $dummyArticle->setSource($faker->domainName);
             $dummyArticle->setVisible(rand(0,1));
-            $dummyArticle->setDateScraped($faker->dateTime($max = 'now'));
-            $dummyArticle->setDatePublished($faker->dateTime($max = 'now'));
+            $dummyArticle->setDateScraped($faker->dateTimeBetween('-1 days','now'));
+            $dummyArticle->setDatePublished($faker->dateTimeBetween('-3 days', '-2 days'));
             $dummyArticle->setLink($faker->url);
-            $dummyArticle->addCategory($this->getReference("category".rand(1,25)));
+            $dummyArticle->setMediaLink($faker->imageUrl($width = 800, $height = 600));
+            $dummyArticle->addCategory($this->getReference("category" . rand(1, 25)));
             $manager->persist($dummyArticle);
 
         }
