@@ -18,7 +18,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 
             $dummyCategory = new Category();
             $dummyCategory->setName($faker->word);
-            $dummyCategory->setVisible(True);
+            $dummyCategory->setVisible(rand(0,1));
             $this->addReference("category" . $i, $dummyCategory);
             $manager->persist($dummyCategory);
         }
