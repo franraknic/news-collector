@@ -1,25 +1,33 @@
 <?php
 
-/** TODO:
- * Koristiti Faker library za generiranje vise podataka*/
-
 namespace AppBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Category;
+use Faker;
 
-class LoadCategoryData implements FixtureInterface{
+class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface{
 
     public function load(ObjectManager $manager){
 
-        $dummyCategory = new Category();
-        $dummyCategory->setName('Sport');
-        $dummyCategory->setVisible(True);
-        $dummyCategory->setArticles(['test', 'test1']);
+        for ($i = 1; $i <= 40; $i++) {
 
-        $manager->persist($dummyCategory);
+            $faker = Faker\Factory::create();
+
+            $dummyCategory = new Category();
+            $dummyCategory->setName($faker->word);
+            $dummyCategory->setVisible(True);
+            $this->addReference("category" . $i, $dummyCategory);
+            $manager->persist($dummyCategory);
+        }
+
         $manager->flush();
 
+    }
+
+    public function getOrder(){
+        return 1;
     }
 }

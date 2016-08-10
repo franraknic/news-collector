@@ -38,10 +38,10 @@ class Article {
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $datePublshed;
+    private $datePublished;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true) //True for fixtures, in reality false
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateScraped;
 
@@ -51,8 +51,7 @@ class Article {
     private $mediaLink;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     * @ORM\ManyToMany(targetEntity="Category", mappedBy="articles")
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="articles")
      * @ORM\JoinTable(name="article_categories")
      */
     private $categories;
@@ -157,27 +156,27 @@ class Article {
     }
 
     /**
-     * Set datePublshed
+     * Set datePublished
      *
-     * @param \DateTime $datePublshed
+     * @param \DateTime $datePublished
      *
      * @return Article
      */
-    public function setDatePublshed($datePublshed)
+    public function setDatePublished($datePublished)
     {
-        $this->datePublshed = $datePublshed;
+        $this->datePublished = $datePublished;
 
         return $this;
     }
 
     /**
-     * Get datePublshed
+     * Get datePublished
      *
      * @return \DateTime
      */
-    public function getDatePublshed()
+    public function getDatePublished()
     {
-        return $this->datePublshed;
+        return $this->datePublished;
     }
 
     /**
@@ -229,33 +228,34 @@ class Article {
     }
 
     /**
-     * Set categories
-     *
-     * @param array $categories
-     *
+     * @param Category $category
      * @return Article
      */
-    public function setCategories($categories)
+    public function addCategory(Category $category)
     {
-
-        foreach ($categories as $category){
-            $categories[] = $category;
+        if(!$this->getCategories()->contains($category)){
+            $this->getCategories()->add($category);
         }
         return $this;
     }
 
     /**
-     * Get categories
-     *
-     * @return array
+     * @param Category $category
+     * @return Article
+     */
+    public function removeCategory(Category $category){
+        if ($this->getCategories()->contains($category)){
+            $this->getCategories()->removeElement($category);
+        }
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
      */
     public function getCategories()
     {
-        $categories = new ArrayCollection();
-        foreach ($this->categories as $category){
-            $categories[] = $category;
-        }
-        return $categories;
+        return $this->categories;
     }
 
     /**

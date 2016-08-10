@@ -21,8 +21,7 @@ class Category {
     private $id;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     * @ORM\ManyToMany(targetEntity="Article", inversedBy="categories") // treba li polje sadrzavati id-eve artikala?!
+     * @ORM\ManyToMany(targetEntity="Article", mappedBy="categories")
      */
     private $articles;
 
@@ -58,27 +57,35 @@ class Category {
      *
      * @return Category
      */
-    public function setArticles($articles)
+    public function addArticle(Article $article)
     {
-        foreach ($articles as $article){
-            $articles[] = $article;
+        if(!$this->getArticles()->contains($article)){
+            $this->getArticles()->add($article);
         }
 
         return $this;
     }
 
     /**
+     * @param Article $article
+     * @return Category
+     */
+
+    public function removeArticle(Article $article){
+        if($this->getArticles()->contains($article)){
+            $this->getArticles()->removeElement($article);
+        }
+        return $this;
+    }
+
+    /**
      * Get articles
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getArticles()
     {
-        $articles = new ArrayCollection();
-        foreach ($this->articles as $article){
-            $articles[] = $article;
-        }
-        return $articles;
+        return $this->articles;
     }
 
     /**
