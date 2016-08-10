@@ -16,6 +16,10 @@ class LoadCategoryData implements FixtureInterface{
         $dummyCategory = new Category();
         $dummyCategory->setName('Sport');
         $dummyCategory->setVisible(True);
-        $dummyCategory->setArticles(NULL);
+        $dummyCategory->setArticles(['test', 'test1']);
+
+        $manager->persist($dummyCategory);
+        $manager->flush();
+
     }
 }
