@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <h1>News Collector</h1>
-    {% for article in articles %}
+
         {% if article.visible == true %}
 
             <h2>{{ article.title }}</h2>
+            <div>{{ article.content }}</div>
             <p>
                 Objavljeno: {{ article.datePublished|date('d.m.Y.') }}
             </p>
             <p>
                 tagovi: {% for category in article.categories %}
-                <a href="{{ path('category', {'category': category.name}) }}">  {{ category.name }}</a>
+                    {{ category.name }}
                 {% endfor %}
-                <br><br> izvor:<a href="{{ article.link }}">{{ article.source }}</a></p>
-            <a href="{{ path('show_article', {'id': article.id}) }}">Više...</a>
-            <hr>
+                <br> izvor:<a href="{{ article.link }}">{{ article.source }}</a></p>
         {% endif %}
-    {% endfor %}
+    <br>
+    <a href="{{ path('homepage') }}">Natrag</a>
 {% endblock %}

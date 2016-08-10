@@ -30,4 +30,13 @@ class DefaultController extends Controller
 
         return $this->render('default/public.html.twig', array('articles' => $cat->getArticles()));
     }
+    /**
+     * @Route("/show/{id}", name="show_article")
+     */
+    public function showAction(Request $request, $id)
+    {
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Article');
+        $article = $rep->findOneBy( array('id' => $id));
+        return $this->render('show_article.html.twig', array('article' => $article));
+    }
 }
