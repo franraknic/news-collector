@@ -19,13 +19,13 @@ class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface
 
             $dummyArticle = new Article();
             $dummyArticle->setTitle($faker->lastName);
-            $dummyArticle->setContent($faker->text($maxNbChars = 200));
+            $dummyArticle->setContent($faker->text(200));
             $dummyArticle->setSource($faker->domainName);
             $dummyArticle->setVisible(rand(0,1));
             $dummyArticle->setDateScraped($faker->dateTimeBetween('-1 days','now'));
             $dummyArticle->setDatePublished($faker->dateTimeBetween('-3 days', '-2 days'));
             $dummyArticle->setLink($faker->url);
-            $dummyArticle->setMediaLink($faker->imageUrl($width = 800, $height = 600));
+            $dummyArticle->setMediaLink($faker->imageUrl);
             $dummyArticle->addCategory($this->getReference("category" . rand(1, 25)));
             $manager->persist($dummyArticle);
 
