@@ -12,30 +12,24 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
-     * @Template("public.html.twig")
+     * @Template()
      */
     public function indexAction(Request $request)
     {
-        $rep = $this->getDoctrine()->getRepository('AppBundle:Article');
-        $articles = $rep->findBy(['visible' => true]);
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Article');
+        $query = $repository->createQueryBuilder('a')
+            ->innerJoin('a.categories', 'c')
+            ->where('c.visible = 1 AND a.visible = 1');
+        $articles = $query->getQuery()->getResult();
 
-        //neznam kako drugacije provjeriti je li kategorija vidljiva
-        foreach ($articles as $article) {
-            foreach ($article->getCategories() as $category) {
-                if ($category->getVisible() == false) {
-                    if (($key = array_search($article, $articles)) !== false) {
-                        unset($articles[$key]);
-                    }
-                }
-            }
-        }
 
         return array('articles' => $articles);
     }
 
     /**
      * @Route("/cat/{category_id}", name="category")
-     * @Template("public.html.twig")
+     * @Template("AppBundle:Default:index.html.twig")
      */
     public function categoryAction(Request $request, $category_id)
     {
@@ -52,7 +46,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/show/{id}", name="show_article")
-     * @Template("show_article.html.twig")
+     * @Template("AppBundle:Default:show_article.html.twig")
      */
     public function showAction(Request $request, $id)
     {
