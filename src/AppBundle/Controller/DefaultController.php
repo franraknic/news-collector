@@ -37,11 +37,11 @@ class DefaultController extends Controller
 
         $cat = $rep->findOneBy(array('id' => $category_id, 'visible' => true));
 
-        if ($cat != null) {
-            return array('articles' => $cat->getArticles());
-        } else {
-            return new Response("Nažalost, kategorija privremeno nije dostupna!");
+        if(empty($cat)){
+            throw $this->createNotFoundException("Nažalost, kategorija nije dostupna!");
         }
+
+        return array('articles' => $cat->getArticles());
     }
 
     /**
