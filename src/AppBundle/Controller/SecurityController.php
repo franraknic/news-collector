@@ -7,11 +7,13 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="login")
+     * @Template()
      */
     public function loginAction(Request $request)
     {
@@ -23,13 +25,11 @@ class SecurityController extends Controller
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render(
-            'login.html.twig',
+        return
             array(
                 // last username entered by the user
                 'last_username' => $lastUsername,
-                'error'         => $error,
-            )
-        );
+                'error' => $error,
+            );
     }
 }

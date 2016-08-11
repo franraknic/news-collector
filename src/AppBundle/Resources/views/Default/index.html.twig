@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>News Collector</h1>
+    <a href="{{ path('login') }}">Admin Login</a>
+    {% for article in articles %}
+
+            <h2>{{ article.title }}</h2>
+            <p>
+                Objavljeno: {{ article.datePublished|date('d.m.Y.') }}
+            </p>
+            <p>
+                tagovi: {% for category in article.categories %}
+                <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
+                {% endfor %}
+                <br><br> izvor:<a href="{{ article.link }}">{{ article.source }}</a></p>
+            <a href="{{ path('show_article', {'id': article.id}) }}">Više...</a>
+            <hr>
+    {% endfor %}
+{% endblock %}
