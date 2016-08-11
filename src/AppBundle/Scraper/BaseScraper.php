@@ -9,20 +9,21 @@ use Goutte\Client;
 class BaseScraper
 {
 
-    public function dummy()
+    #submenu
+    #submenu > li:nth-child(2) > a > cufon > canvas
+    private $rawContent;
+
+    public function getRawContent()
     {
-        /*
         $client = new Client();
-        $crawler = $client->request('GET', 'http://www.index.hr/sport/');
+        $crawler = $client->request('GET', 'http://www.index.hr/vijesti/');
+
         $content = [];
-        $content['title'] = $crawler->filterXPath('//*[@id="main_container"]/div/div[2]/div[2]/div/div[3]/div[2]/div/div/div[3]')->first()->text();
-        $crawler->filter('#article_text p')->each(function ($node) use (&$content) {
-            $content['body'][] = $node->text();
-        });
+
+        foreach ($crawler->filter('#submenu > li > a > cufon ') as $link){
+            $content[] = $link;
+        }
+
         var_dump($content);
-        */
-        echo "Hello from the container. \n";
-        echo "BaseScraper class.\n";
-        return 0;
     }
 }

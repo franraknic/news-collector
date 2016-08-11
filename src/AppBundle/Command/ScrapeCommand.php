@@ -21,6 +21,6 @@ class ScrapeCommand extends ContainerAwareCommand
     {
         #$output->writeln('I am a scraper. I scrape all day and I scrape all night!');
         $somescraper = $this->getContainer()->get('scraper_service');
-        $somescraper->dummy();
+        $somescraper->getRawContent();
     }
 }
