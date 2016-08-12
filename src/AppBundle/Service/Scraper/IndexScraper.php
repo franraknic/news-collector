@@ -18,7 +18,9 @@ class IndexScraper extends BaseScraper
      */
     protected function getSourcePages()
     {
-        $sourcePages = array('http://www.index.hr/vijesti/');
+        $sourcePages = array(
+            'http://www.index.hr/vijesti/',
+            );
 
         return $sourcePages;
     }
@@ -43,7 +45,7 @@ class IndexScraper extends BaseScraper
             //-------
 
 
-            
+
             $client = new Client();
             $article = new Article();
             $crawler = $client->request('GET', $articleUrl);
@@ -53,7 +55,7 @@ class IndexScraper extends BaseScraper
             $article->setVisible(true);
             $article->addCategory($category);
 
-            $article->setContent(implode(" ", $crawler->filter('#article_text > p')->each(function ($node) {
+            $article->setContent(implode(" ", $crawler->filter('#article_text  p')->each(function ($node) {
                 return $node->text();
             })));
             $articles[] = $article;

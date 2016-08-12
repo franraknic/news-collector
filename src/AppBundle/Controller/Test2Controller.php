@@ -17,18 +17,17 @@ class Test2Controller extends Controller
      */
     public function indexAction(Request $request)
     {
-        $sourcePageUrl='http://www.index.hr/vijesti/clanak/glas-koncila-neposlusna-zena-je-ona-koja-trazi-jednakosti/912366.aspx';
+        $sourcePage="http://www.index.hr";
         $client = new Client();
-        $article = new Article();
-        $crawler = $client->request('GET', $sourcePageUrl);
-        $article->setTitle($crawler->filter('#article_title_inner h1')->first()->text());
-        $article->setLink($sourcePageUrl);
-        $article->setSource("index.hr");
-        $article->setVisible(true);
-
-        $article->setContent(implode(" ",$crawler->filter('#article_text > p')->each(function ($node){
-            return $node->text();
-        })));
-        return new Response('<html><body>'.$article->getContent().'</body></html>');
+        $crawler = $client->request('GET',"http://www.index.hr/sport/" );
+        $articlesUrl = $crawler
+            ->filter('.columnright')
+            ->filter('.list_news')
+            ->first()
+            ->filter('a')
+            ->each(function ($node) use ($sourcePage) {
+                return $sourcePage.$node->attr('href');
+            });
+        return new Response('<html><body>'.implode("<br>",$articlesUrl).'</body></html>');
     }
 }
