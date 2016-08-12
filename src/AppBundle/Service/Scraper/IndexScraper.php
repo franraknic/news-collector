@@ -5,6 +5,7 @@ namespace AppBundle\Service\Scraper;
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
+
 class IndexScraper extends BaseScraper
 {
     /**
@@ -14,7 +15,6 @@ class IndexScraper extends BaseScraper
      */
     protected function getSourcePages()
     {
-        // TODO: Implement getSourcePages() method.
     }
 
     /**
@@ -31,10 +31,10 @@ class IndexScraper extends BaseScraper
      * Returns array of article URLS
      * @todo move to class extension
      * @param $sourcePageUrl
+     * @return array
      */
     protected function fetchArticleUrlsFromPage($sourcePageUrl)
     {
-        // TODO: Implement fetchArticleUrlsFromPage() method.
     }
 
     public function fetchArticles()
