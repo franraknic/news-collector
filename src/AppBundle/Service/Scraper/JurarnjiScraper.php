@@ -14,7 +14,19 @@ class JutarnjiScraper extends BaseScraper
      */
     protected function getSourcePages()
     {
-        // TODO: Implement getSourcePages() method.
+        return array(
+            [
+                'http://www.jutarnji.hr/vijesti/hrvatska',
+                'http://www.jutarnji.hr/vijesti/svijet',
+                'http://www.jutarnji.hr/vijesti/crna-kronika',
+                'http://www.jutarnji.hr/sport/nogomet',
+                'http://www.jutarnji.hr/sport/kosarka',
+                'http://www.jutarnji.hr/sport/tenis',
+                'http://www.jutarnji.hr/biznis/financije-i-trzista',
+                'http://www.jutarnji.hr/biznis/tvrtke',
+                'http://www.jutarnji.hr/biznis/karijere',
+            ]
+        );
     }
 
     /**
@@ -31,10 +43,22 @@ class JutarnjiScraper extends BaseScraper
      * Returns array of article URLS
      * @todo move to class extension
      * @param $sourcePageUrl
+     * @return array
      */
     protected function fetchArticleUrlsFromPage($sourcePageUrl)
     {
-        // TODO: Implement fetchArticleUrlsFromPage() method.
+        $client = new Client();
+        $articleUrls = [];
+        foreach ($sourcePageUrl as $url) {
+            $crawler = $client->request('GET', $url);
+            for ($i = 1; $i <= 15; $i++) {
+                $crawler->filter('body > div . container > section > div . row . jl - scroll - container > div . col - sm - 8 > section:nth - child(2) > article:nth - child('.$i.') > div > div . media - body > h4 > a')
+                    ->each(function ($node){
+                        $articleUrls[] = $node;
+                    });
+            }
+        }
+        return $articleUrls;
     }
 
     public function fetchArticles()
