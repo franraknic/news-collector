@@ -8,9 +8,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Category;
 use Faker;
 
-class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface{
+class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
+{
 
-    public function load(ObjectManager $manager){
+    public function load(ObjectManager $manager)
+    {
 
         for ($i = 1; $i <= 20; $i++) {
 
@@ -18,7 +20,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 
             $dummyCategory = new Category();
             $dummyCategory->setName($faker->word);
-            $dummyCategory->setVisible(rand(0,1));
+            $dummyCategory->setVisible(rand(0, 1));
             $this->addReference("category" . $i, $dummyCategory);
             $manager->persist($dummyCategory);
         }
@@ -27,7 +29,8 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 
     }
 
-    public function getOrder(){
+    public function getOrder()
+    {
         return 1;
     }
 }

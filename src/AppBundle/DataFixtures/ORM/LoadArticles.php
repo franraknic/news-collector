@@ -9,7 +9,8 @@ use AppBundle\Entity\Article;
 use Faker;
 
 
-class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface{
+class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface
+{
 
     public function load(ObjectManager $manager)
     {
@@ -21,21 +22,20 @@ class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface
             $dummyArticle->setTitle($faker->lastName);
             $dummyArticle->setContent($faker->text(4000));
             $dummyArticle->setSource($faker->domainName);
-            $dummyArticle->setVisible(rand(0,1));
-            $dummyArticle->setDateScraped($faker->dateTimeBetween('-1 days','now'));
+            $dummyArticle->setVisible(rand(0, 1));
+            $dummyArticle->setDateScraped($faker->dateTimeBetween('-1 days', 'now'));
             $dummyArticle->setDatePublished($faker->dateTimeBetween('-3 days', '-2 days'));
             $dummyArticle->setLink($faker->url);
             $dummyArticle->setMediaLink($faker->imageUrl);
 
-            for ($n = 1; $n <= 20; $n++){
-                if (rand(0,100) % 7 == 0){
-                    $dummyArticle->addCategory($this->getReference('category'.$n));
+            for ($n = 1; $n <= 20; $n++) {
+                if (rand(0, 100) % 7 == 0) {
+                    $dummyArticle->addCategory($this->getReference('category' . $n));
                 }
             }
 
-
             $manager->persist($dummyArticle);
-            }
+        }
         $manager->flush();
     }
 
