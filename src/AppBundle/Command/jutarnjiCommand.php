@@ -18,8 +18,8 @@ class jutarnjiCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $scraper = $this->getContainer()->get('index-scraper');
-        $output->writeln('I am a scraper. I scrape all day and I scrape all night!');
+        $scraper = $this->getContainer()->get('jutarnji-scraper');
+        $scraper->fetchArticles();
 
     }
 }
