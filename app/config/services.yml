@@ -7,6 +7,10 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    scraper_service:
-        class: AppBundle\Scraper\BaseScraper
+    index-scraper:
+        class: AppBundle\Service\Scraper\IndexScraper
+        arguments:
+
+    jutarnji-scraper:
+        class: AppBundle\Service\Scraper\JutarnjiScraper
         arguments:
