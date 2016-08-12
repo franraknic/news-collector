@@ -3,7 +3,9 @@
 namespace AppBundle\Service\Scraper;
 
 use AppBundle\Entity\Category;
+
 use Goutte\Client;
+use InvalidArgumentException;
 use Symfony\Component\DomCrawler\Crawler;
 use AppBundle\Entity\Article;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -20,7 +22,8 @@ class IndexScraper extends BaseScraper
     {
         $sourcePages = array(
             'http://www.index.hr/vijesti/',
-            );
+            'http://www.index.hr/sport/'
+        );
 
         return $sourcePages;
     }
@@ -37,27 +40,38 @@ class IndexScraper extends BaseScraper
         foreach ($articleUrls as $articleUrl) {
 
 
-
             //testno
-            $category= new Category();
+            $category = new Category();
             $category->setName("vijesti");
             $category->setVisible(true);
             //-------
 
 
-
             $client = new Client();
             $article = new Article();
             $crawler = $client->request('GET', $articleUrl);
-            $article->setTitle($crawler->filter('#article_title_inner h1')->first()->text());
+            try {
+                $title = $crawler->filter('#article_title_inner h1')->first()->text();
+                $article->setTitle($title);
+            } catch (InvalidArgumentException $e) {
+                // todo print information about url
+                continue;
+            }
+
             $article->setLink($articleUrl);
             $article->setSource("index.hr");
             $article->setVisible(true);
             $article->addCategory($category);
 
-            $article->setContent(implode(" ", $crawler->filter('#article_text  p')->each(function ($node) {
-                return $node->text();
-            })));
+            $nodeList = $crawler->filter('#article_text  p');
+            $parsedNodes = $nodeList->each(function ($node) {
+                try {
+                    return $node->text();
+                } catch (InvalidArgumentException $e) {
+                    return "";
+                }
+            });
+            $article->setContent(implode(" ", $parsedNodes));
             $articles[] = $article;
 
         }
@@ -72,7 +86,7 @@ class IndexScraper extends BaseScraper
      */
     protected function fetchArticleUrlsFromPage($sourcePageUrl)
     {
-        $sourcePage="http://www.index.hr";
+        $sourcePage = "http://www.index.hr";
         $client = new Client();
         $crawler = $client->request('GET', $sourcePageUrl);
         $articlesUrl = $crawler
@@ -81,7 +95,7 @@ class IndexScraper extends BaseScraper
             ->first()
             ->filter('a')
             ->each(function ($node) use ($sourcePage) {
-                return $sourcePage.$node->attr('href');
+                return $sourcePage . $node->attr('href');
             });
 
         return $articlesUrl;
