@@ -19,6 +19,15 @@ class indexCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $scraper = $this->getContainer()->get('index-scraper');
-        $output->writeln('I am a scraper. I scrape all day and I scrape all night!');
+        $articles = $scraper->fetchArticles();
+        $doc = $this->getContainer()->get('doctrine');
+        $em=$doc->getManager();
+
+        foreach ($articles as $article) {
+            $em->persist($article);
+        }
+
+        $em->flush();
+
     }
 }

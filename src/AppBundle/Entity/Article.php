@@ -41,7 +41,7 @@ class Article {
     private $datePublished;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateScraped;
 
@@ -51,7 +51,7 @@ class Article {
     private $mediaLink;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Category", inversedBy="articles")
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="articles", cascade="persist")
      * @ORM\JoinTable(name="article_categories")
      */
     private $categories;
