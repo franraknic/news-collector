@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class indexCommand extends ContainerAwareCommand
+class IndexCommand extends ContainerAwareCommand
 {
     protected function configure()
     {

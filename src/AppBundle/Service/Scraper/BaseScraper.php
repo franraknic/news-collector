@@ -8,7 +8,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 abstract class BaseScraper implements ScraperInterface
 {
-    protected $rawCrawler;
 
     /**
      * Returns array of URLs for source pages.
