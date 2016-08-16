@@ -20,6 +20,7 @@ abstract class BaseScraper implements ScraperInterface
      * Returns array of articles from given URL
      * @todo move to class extension
      * @param $articleUrls
+     * @param $id
      */
     protected abstract function processUrls($articleUrls,$id);
 

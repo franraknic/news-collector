@@ -37,7 +37,7 @@ class JutarnjiScraper extends BaseScraper
      * @param $articleUrls
      * @return array
      */
-    protected function processUrls($articleUrls)
+    protected function processUrls($articleUrls, $id)
     {
 
         $articles = array();
@@ -87,31 +87,21 @@ class JutarnjiScraper extends BaseScraper
      * @param array
      * @return array
      */
-    protected function fetchArticleUrlsFromPage($sourcePageUrls)
+    protected function fetchArticleUrlsFromPage($sourcePageUrl)
     {
         $articleUrls = array();
-        foreach ($sourcePageUrls as $url) {
-            $key = array_search($url, $sourcePageUrls); // for category ID
-            echo "Gathering links from: " . $url . "\n";
-            $client = new Client();
-            $crawler = $client->request('GET', $url);
-            for ($i = 1; $i <= 10; $i++) {
-                $newArticleUrls = $crawler->filter('body > div.container > section > div.row.jl-scroll-container > div.col-sm-8 > section:nth-child(2) > article:nth-child(' . $i . ') > div > div.media-body > h4 > a ')
-                    ->each(function ($node) {
-                        return $node->first()->attr('href');
-                    });
+        $client = new Client();
+        $crawler = $client->request('GET', $sourcePageUrl);
+        for ($i = 1; $i <= 10; $i++) {
+            $newArticleUrls = $crawler->filter('body > div.container > section > div.row.jl-scroll-container > div.col-sm-8 > section:nth-child(2) > article:nth-child(' . $i . ') > div > div.media-body > h4 > a ')
+                ->each(function ($node) {
+                    return $node->first()->attr('href');
+                });
 
-                $articleUrls = array_merge($articleUrls, $newArticleUrls);
-            }
+            $articleUrls = array_merge($articleUrls, $newArticleUrls);
         }
 
         return $articleUrls;
     }
 
-    public function fetchArticles()
-    {
-        $pageUrls = $this->getSourcePages();
-        $articleUrls = $this->fetchArticleUrlsFromPage($pageUrls);
-        $articles = $this->processUrls($articleUrls);
-    }
 }
