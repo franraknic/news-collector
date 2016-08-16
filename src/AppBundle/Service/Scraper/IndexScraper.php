@@ -55,7 +55,7 @@ class IndexScraper extends BaseScraper
         foreach ($articleUrls as $articleUrl) {
 
             $rep = $this->em->getRepository("AppBundle:Category");
-            $cat = $rep->findOneBy(array("id" => $i));
+            $cat = $rep->findOneBy(array("id" => $id));
 
             $client = new Client(['timeout' => 6.0]);
             $article = new Article();
