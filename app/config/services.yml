@@ -10,6 +10,7 @@ services:
     index-scraper:
         class: AppBundle\Service\Scraper\IndexScraper
         arguments:
+            entityManager: "@doctrine.orm.entity_manager"
 
     jutarnji-scraper:
         class: AppBundle\Service\Scraper\JutarnjiScraper

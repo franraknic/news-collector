@@ -35,9 +35,10 @@ class Category {
      */
     private $visible;
 
-    public function __construct()
+    public function __construct($name)
     {
         $this->articles = new ArrayCollection();
+        $this->name=$name;
     }
 
     /**

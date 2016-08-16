@@ -21,13 +21,14 @@ class indexCommand extends ContainerAwareCommand
         $scraper = $this->getContainer()->get('index-scraper');
         $articles = $scraper->fetchArticles();
         $doc = $this->getContainer()->get('doctrine');
-        $em=$doc->getManager();
+        $em = $doc->getManager();
 
         foreach ($articles as $article) {
             $em->persist($article);
+            $em->flush();
+
         }
 
-        $em->flush();
 
     }
 }
