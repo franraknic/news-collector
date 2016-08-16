@@ -12,8 +12,7 @@ class jutarnjiCommand extends ContainerAwareCommand
     {
         $this
             ->setName('scrape:jutarnji')
-            ->setDescription('Scrapes jutarnji.hr for articles.')
-            ->setHelp('Some text for --help user input');
+            ->setDescription('Scrapes jutarnji.hr for articles.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
