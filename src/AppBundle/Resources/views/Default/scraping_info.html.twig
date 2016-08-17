@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Scraping info</h1>
+    <p>Articles scraped: {{ numArticles }}</p>
+    {% for category in categories %}
+    <p>Articles in {{ category.name }}: </p>
+        {% endfor %}
+{% endblock %}

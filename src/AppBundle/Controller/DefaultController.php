@@ -22,8 +22,6 @@ class DefaultController extends Controller
             ->innerJoin('a.categories', 'c')
             ->where('c.visible = 1 AND a.visible = 1');
         $articles = $query->getQuery()->getResult();
-
-
         return array('articles' => $articles);
     }
 
@@ -53,5 +51,22 @@ class DefaultController extends Controller
         $rep = $this->getDoctrine()->getRepository('AppBundle:Article');
         $article = $rep->findOneBy(array('id' => $id));
         return array('article' => $article);
+    }
+
+    /**
+     * @Route("/scraping-info", name="show_scraping_info")
+     * @Template("AppBundle:Default:scraping_info.html.twig")
+     */
+    public function showScrapingInfo(Request $request){
+
+        $em = $this->getDoctrine()->getManager();
+        $repositoryA = $em->getRepository('AppBundle:Article');
+        $query = $repositoryA->createQueryBuilder('a')
+            ->innerJoin('a.categories', 'c');
+        $articles = $query->getQuery()->getResult();
+        $repositoryB = $em->getRepository('AppBundle:Category');
+        $cats = $repositoryB->findAll();
+        return array('numArticles' => count($articles), 'categories' => $cats );
+
     }
 }
