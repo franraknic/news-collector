@@ -20,14 +20,17 @@ class PersistArticles
 
     public function persistArticles($articles)
     {
+        echo "Preparing articles.... \n";
         foreach ($articles as $article) {
             $this->em->persist($article);
+
         }
         try{
+            echo "Saving articles.... \n";
             $this->em->flush();
         }
         catch (UniqueConstraintViolationException $e){
-            echo "duplicate article";
+            echo "There are some duplicate articles.\n";
         }
     }
 }

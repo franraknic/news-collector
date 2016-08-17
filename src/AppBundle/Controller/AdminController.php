@@ -16,6 +16,8 @@ class AdminController extends Controller
      */
     public function adminAction(Request $request)
     {
+
+
         return array();
     }
     /**
@@ -24,6 +26,10 @@ class AdminController extends Controller
      */
     public function option_1Action(Request $request)
     {
+        //Podešavanje vidljivosti pojedinačnih članaka
+
+
+
         return array();
     }
 }
