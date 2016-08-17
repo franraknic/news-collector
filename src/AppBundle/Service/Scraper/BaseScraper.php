@@ -22,7 +22,7 @@ abstract class BaseScraper implements ScraperInterface
      * @param $articleUrls
      * @param $id
      */
-    protected abstract function processUrls($articleUrls,$id);
+    protected abstract function processUrls($articleUrls, $id);
 
     /**
      * Returns array of article URLS
@@ -34,13 +34,12 @@ abstract class BaseScraper implements ScraperInterface
     public function fetchArticles()
     {
         $sourcePages = $this->getSourcePages();
-        $articles=array();
+        $articles = array();
         foreach ($sourcePages as $sourcePage) {
             $newUrls = $this->fetchArticleUrlsFromPage($sourcePage);
-            var_dump($newUrls);
-            $id=array_search($sourcePage,$sourcePages);
-            $articles1=$this->processUrls($newUrls,$id);
-            $articles = array_merge($articles,$articles1);
+            $id = array_search($sourcePage, $sourcePages);
+            $articles1 = $this->processUrls($newUrls, $id);
+            $articles = array_merge($articles, $articles1);
         }
 
         return $articles;

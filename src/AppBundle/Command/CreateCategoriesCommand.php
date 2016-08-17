@@ -27,8 +27,7 @@ class CreateCategoriesCommand extends ContainerAwareCommand
             $category = new Category($category);
             $category->setVisible(1);
             $em->persist($category);
-            $em->flush();
         }
-
+        $em->flush();
     }
 }
