@@ -7,6 +7,7 @@ use Goutte\Client;
 use InvalidArgumentException;
 use Symfony\Component\DomCrawler\Crawler;
 use AppBundle\Entity\Article;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Service\Scraper\CategoryId;
@@ -74,6 +75,7 @@ class IndexScraper extends BaseScraper
             $article->setSource("index.hr");
             $article->setVisible(true);
             $article->addCategory($cat);
+            $article->setDateScraped(new DateTime());
 
             $nodeList = $crawler->filter('#article_text  p');
             $parsedNodes = $nodeList->each(function ($node) {

@@ -6,15 +6,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class AdminController extends Controller
 {
     /**
      * @Route("/admin", name="adminpage")
+     * @Template()
      */
-    public function indexAction(Request $request)
+    public function adminAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return new Response('<html><body>Admin page!</body></html>');
+        return array();
+    }
+    /**
+     * @Route("/admin/option_1", name="option_1")
+     * @Template()
+     */
+    public function option_1Action(Request $request)
+    {
+        return array();
     }
 }

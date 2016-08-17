@@ -34,11 +34,11 @@ class CreateCategoriesCommand extends ContainerAwareCommand
             CategoryId::financije_i_trzista => 'financije i trzista',
             CategoryId::tvrtke => 'tvrtke',
             CategoryId::karijere => 'karijere',
-    );
-        foreach ($categories as $category) {
+          );
+
+        foreach ($categories as $id => $category) {
 
             $category = new Category($category);
-            $id = array_search($category, $categories);
             $category->setVisible(1);
             $category->setId($id);
             $em->persist($category);
