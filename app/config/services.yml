@@ -19,3 +19,4 @@ services:
 
     persist-articles:
         class: AppBundle\Service\PersistArticles
+        entityManager: "@doctrine.orm.entity_manager"

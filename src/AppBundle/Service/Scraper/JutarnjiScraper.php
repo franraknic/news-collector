@@ -43,6 +43,7 @@ class JutarnjiScraper extends BaseScraper
     /**
      * Returns array of articles from given URL
      * @param $articleUrls
+     * @param $id
      * @return array
      */
     protected function processUrls($articleUrls, $id)
