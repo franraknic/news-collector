@@ -89,6 +89,7 @@ class JutarnjiScraper extends BaseScraper
             $article->setMediaLink(reset($media));
             $article->setDatePublished($date_published);
             $article->addCategory($cat);
+            $article->setVisible(true);
         }
         return $articles;
     }

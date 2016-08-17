@@ -3,10 +3,10 @@
 namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class PersistArticles
 {
-    protected $articles;
     protected $em;
 
     /**
@@ -14,17 +14,21 @@ class PersistArticles
      * @param $articles
      * @param EntityManager $em
      */
-    public function __construct($articles, EntityManager $em)
+    public function __construct(EntityManager $em)
     {
-        $this->articles = $articles;
-        $this->em = $em;
+        $this->em =$em;
     }
 
-    public function persistArticles()
+    public function persistArticles($articles)
     {
-        foreach ($this->articles as $article) {
+        foreach ($articles as $article) {
             $this->em->persist($article);
         }
-        $this->em->flush();
+        try{
+            $this->em->flush();
+        }
+        catch (UniqueConstraintViolationException $e){
+            echo "duplicate article";
+        }
     }
 }
