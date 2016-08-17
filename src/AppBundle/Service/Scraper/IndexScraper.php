@@ -75,7 +75,7 @@ class IndexScraper extends BaseScraper
             $article->setSource("index.hr");
             $article->setVisible(true);
             $article->addCategory($cat);
-            $article->setDateScraped(new DateTime());
+            //$article->setDateScraped(new DateTime());
 
             $nodeList = $crawler->filter('#article_text  p');
             $parsedNodes = $nodeList->each(function ($node) {

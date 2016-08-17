@@ -20,12 +20,12 @@ class PersistArticles
 
     public function persistArticles($articles)
     {
+        $n=0;
         echo "Preparing articles.... \n";
         foreach ($articles as $article) {
             $stored = $this->em->getRepository('AppBundle:Article')->findOneBy(array('link' => $article->getLink()));
-            $n=0;
             if ($stored == null) {
-                echo "Persisting...".$article->getLink();
+                echo "Persisting...".$article->getLink()."\n";
                 $n++;
                 $this->em->persist($article);
             }
