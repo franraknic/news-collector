@@ -12,23 +12,16 @@ class IndexCommand extends ContainerAwareCommand
     {
         $this
             ->setName('scrape:index')
-            ->setDescription('Scrapes index.hr for articles.')
-            ->setHelp('Some text for --help user input');
+            ->setDescription('Scrapes index.hr for articles.');
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $scraper = $this->getContainer()->get('index-scraper');
         $articles = $scraper->fetchArticles();
-        $doc = $this->getContainer()->get('doctrine');
-        $em = $doc->getManager();
-
-        foreach ($articles as $article) {
-            $em->persist($article);
-            $em->flush();
-
-        }
-
+        $persistence = $this->getContainer()->get('persist-articles');
+        $persistence->persistArticles($articles);
 
     }
 }

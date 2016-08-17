@@ -18,7 +18,9 @@ class JutarnjiCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $scraper = $this->getContainer()->get('jutarnji-scraper');
-        $scraper->fetchArticles();
+        $articles = $scraper->fetchArticles();
+        $persistence = $this->getContainer()->get('persist-articles');
+        $persistence->persistArticles($articles);
 
     }
 }

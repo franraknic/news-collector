@@ -6,7 +6,7 @@ use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
 
-abstract class BaseScraper implements ScraperInterface
+abstract class BaseScraper
 {
 
     /**
@@ -18,7 +18,6 @@ abstract class BaseScraper implements ScraperInterface
 
     /**
      * Returns array of articles from given URL
-     * @todo move to class extension
      * @param $articleUrls
      * @param $id
      */
@@ -26,7 +25,6 @@ abstract class BaseScraper implements ScraperInterface
 
     /**
      * Returns array of article URLS
-     * @todo move to class extension
      * @param $sourcePageUrl
      */
     protected abstract function fetchArticleUrlsFromPage($sourcePageUrl);
@@ -36,9 +34,9 @@ abstract class BaseScraper implements ScraperInterface
         $sourcePages = $this->getSourcePages();
         $articles = array();
         foreach ($sourcePages as $sourcePage) {
-            $newUrls = $this->fetchArticleUrlsFromPage($sourcePage);
+            $articleUrls = $this->fetchArticleUrlsFromPage($sourcePage);
             $id = array_search($sourcePage, $sourcePages);
-            $articles1 = $this->processUrls($newUrls, $id);
+            $articles1 = $this->processUrls($articleUrls, $id);
             $articles = array_merge($articles, $articles1);
         }
 

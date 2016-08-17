@@ -14,8 +14,7 @@ class CreateCategoriesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('categories:create')
-            ->setDescription('Creates hardcoded categories.')
-            ->setHelp('Some text for --help user input');
+            ->setDescription('Creates hardcoded categories.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

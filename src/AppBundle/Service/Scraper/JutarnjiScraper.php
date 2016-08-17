@@ -11,6 +11,13 @@ use AppBundle\Service\Scraper\CategoryId;
 
 class JutarnjiScraper extends BaseScraper
 {
+    protected $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * Returns array of URLs for source pages.
      * E.g. site.com/news site.com/sport
@@ -36,11 +43,13 @@ class JutarnjiScraper extends BaseScraper
     /**
      * Returns array of articles from given URL
      * @param $articleUrls
+     * @param $id
      * @return array
      */
     protected function processUrls($articleUrls, $id)
     {
-
+        $rep = $this->em->getRepository("AppBundle:Category");
+        $cat = $rep->findOneBy(array("id" => $id));
         $articles = array();
         $client = new Client();
         foreach ($articleUrls as $url) {
@@ -79,6 +88,7 @@ class JutarnjiScraper extends BaseScraper
             $article->setSource('jutarnji.hr');
             $article->setMediaLink(reset($media));
             $article->setDatePublished($date_published);
+            $article->addCategory($cat);
         }
         return $articles;
     }
