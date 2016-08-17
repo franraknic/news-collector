@@ -15,22 +15,27 @@ class PersistArticles
      */
     public function __construct(EntityManager $em)
     {
-        $this->em =$em;
+        $this->em = $em;
     }
 
     public function persistArticles($articles)
     {
         echo "Preparing articles.... \n";
         foreach ($articles as $article) {
-            $this->em->persist($article);
-
+            $stored = $this->em->getRepository('AppBundle:Article')->findOneBy(array('link' => $article->getLink()));
+            $n=0;
+            if ($stored == null) {
+                echo "Persisting...".$article->getLink();
+                $n++;
+                $this->em->persist($article);
+            }
         }
-        try{
+        try {
             echo "Saving articles.... \n";
             $this->em->flush();
-        }
-        catch (UniqueConstraintViolationException $e){
+        } catch (UniqueConstraintViolationException $e) {
             echo "There are some duplicate articles.\n";
         }
+        echo "Saved ".$n." new articles.\n";
     }
 }
