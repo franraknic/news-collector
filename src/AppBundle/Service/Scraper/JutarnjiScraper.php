@@ -56,42 +56,79 @@ class JutarnjiScraper extends BaseScraper
             echo "Scraping: " . $url . "\n";
             $article = new Article();
             $crawler = $client->request('GET', $url);
-            $title = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > h1')
-                ->each(function ($node) {
 
-                    return $node->text();
-                });
-            $content = $crawler->filter('body > div.container > section > div.row.article_body > div.col-sm-8 > div > section > div')
-                ->each(function ($node) {
+            if ($id == 6 || $id == 7 || $id == 8){
 
-                    return $node->text();
-                });
-            $media = $crawler->filter('body > div.container > section > div:nth-child(2) > div > section > article > div > div.img-container.picture > img')
-                ->each(function ($node) {
+                $title = $crawler->filter('body > div.container > section > div.row.articleWrapper > div.header.ahh.col-sm-12 > h1')
+                    ->each(function ($node) {
 
-                    return $node->attr('src');
-                });
+                        return $node->text();
+                    });
+                $content = $crawler->filter('#content-body-4102293-4619951 > p:nth-child(1)') //problematicni selektor
+                    ->each(function ($node) {
 
-            $date_published = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > ul > li:nth-child(4) > p')
-                ->each(function ($node) {
-                    $d = $node->text();
-                    $d = substr($d, 1, 10);
-                    $d = str_replace('.', '-', $d);
-                    $d = strtotime($d);
-                    return date('Y-m-d', $d);
-                });
+                        return $node->text();
+                    });
+
+                $date_published = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > ul > li:nth-child(4) > p')
+                    ->each(function ($node) {
+                        $d = $node->text();
+                        $d = substr($d, 1, 10);
+                        $d = str_replace('.', '-', $d);
+                        $d = strtotime($d);
+                        return date('Y-m-d', $d);
+                    });
 
 
-            $article->setTitle(reset($title));
-            $article->setContent(reset($content));
-            $article->setLink($url);
-            $article->setSource('jutarnji.hr');
-            $article->setMediaLink(reset($media));
-           // $article->setDatePublished($date_published);
-            $article->addCategory($cat);
-            $article->setVisible(true);
+                $article->setTitle(reset($title));
+                $article->setContent(reset($content));
+                $article->setLink($url);
+                $article->setSource('jutarnji.hr');
+                // $article->setDatePublished($date_published);
+                $article->addCategory($cat);
+                $article->setVisible(true);
 
-            $articles[]=$article;
+                $articles[] = $article;
+
+            }else {
+
+                $title = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > h1')
+                    ->each(function ($node) {
+
+                        return $node->text();
+                    });
+                $content = $crawler->filter('body > div.container > section > div.row.article_body > div.col-sm-8 > div > section > div')
+                    ->each(function ($node) {
+
+                        return $node->text();
+                    });
+                $media = $crawler->filter('body > div.container > section > div:nth-child(2) > div > section > article > div > div.img-container.picture > img')
+                    ->each(function ($node) {
+
+                        return $node->attr('src');
+                    });
+
+                $date_published = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > ul > li:nth-child(4) > p')
+                    ->each(function ($node) {
+                        $d = $node->text();
+                        $d = substr($d, 1, 10);
+                        $d = str_replace('.', '-', $d);
+                        $d = strtotime($d);
+                        return date('Y-m-d', $d);
+                    });
+
+
+                $article->setTitle(reset($title));
+                $article->setContent(reset($content));
+                $article->setLink($url);
+                $article->setSource('jutarnji.hr');
+                $article->setMediaLink(reset($media));
+                // $article->setDatePublished($date_published);
+                $article->addCategory($cat);
+                $article->setVisible(true);
+
+                $articles[] = $article;
+            }
         }
         return $articles;
     }
