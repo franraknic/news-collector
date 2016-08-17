@@ -44,7 +44,7 @@ class IndexScraper extends BaseScraper
     /**
      * Returns array of articles from given URL
      * @param $articleUrls
-     * @param $i
+     * @param $id
      * @return array
      */
     protected function processUrls($articleUrls,$id)
