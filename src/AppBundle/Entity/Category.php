@@ -16,7 +16,6 @@ class Category {
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -49,6 +48,15 @@ class Category {
     public function getId()
     {
         return $this->id;
+    }
+    /**
+     * Set id
+     *
+     * @param integer
+     */
+    public function setId($id)
+    {
+        $this->id=$id;
     }
 
     /**

@@ -7,6 +7,7 @@ use AppBundle\Entity\Category;
 use Doctrine\ORM\EntityManager;
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
+use AppBundle\Service\Scraper\CategoryId;
 
 class JutarnjiScraper extends BaseScraper
 {
@@ -19,15 +20,15 @@ class JutarnjiScraper extends BaseScraper
     {
         return array(
 
-            1 => 'http://www.jutarnji.hr/vijesti/hrvatska',
-            2 => 'http://www.jutarnji.hr/vijesti/svijet',
-            3 => 'http://www.jutarnji.hr/vijesti/crna-kronika',
-            4 => 'http://www.jutarnji.hr/sport/nogomet',
-            5 => 'http://www.jutarnji.hr/sport/kosarka',
-            6 => 'http://www.jutarnji.hr/sport/tenis',
-            7 => 'http://www.jutarnji.hr/biznis/financije-i-trzista',
-            8 => 'http://www.jutarnji.hr/biznis/tvrtke',
-            9 => 'http://www.jutarnji.hr/biznis/karijere',
+            CategoryId::hrvatska => 'http://www.jutarnji.hr/vijesti/hrvatska',
+            CategoryId::svijet => 'http://www.jutarnji.hr/vijesti/svijet',
+            CategoryId::crna_kronika => 'http://www.jutarnji.hr/vijesti/crna-kronika',
+            CategoryId::nogomet => 'http://www.jutarnji.hr/sport/nogomet',
+            CategoryId::kosarka => 'http://www.jutarnji.hr/sport/kosarka',
+            CategoryId::tenis => 'http://www.jutarnji.hr/sport/tenis',
+            CategoryId::financije_i_trzista => 'http://www.jutarnji.hr/biznis/financije-i-trzista',
+            CategoryId::tvrtke => 'http://www.jutarnji.hr/biznis/tvrtke',
+            CategoryId::karijere => 'http://www.jutarnji.hr/biznis/karijere',
 
         );
     }
