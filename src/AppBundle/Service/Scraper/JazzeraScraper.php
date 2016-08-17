@@ -9,7 +9,7 @@
 namespace AppBundle\Service\Scraper;
 
 
-class JazzeraScraper extends BaseScraper implements ScraperInterface
+class JazzeraScraper extends BaseScraper
 {
 
     /**
@@ -26,17 +26,16 @@ class JazzeraScraper extends BaseScraper implements ScraperInterface
 
     /**
      * Returns array of articles from given URL
-     * @todo move to class extension
      * @param $articleUrls
+     * @param $id
      */
-    protected function processUrls($articleUrls)
+    protected function processUrls($articleUrls, $id)
     {
         // TODO: Implement processUrls() method.
     }
 
     /**
      * Returns array of article URLS
-     * @todo move to class extension
      * @param $sourcePageUrl
      */
     protected function fetchArticleUrlsFromPage($sourcePageUrl)
@@ -44,8 +43,4 @@ class JazzeraScraper extends BaseScraper implements ScraperInterface
         // TODO: Implement fetchArticleUrlsFromPage() method.
     }
 
-    public function fetchArticles()
-    {
-        // TODO: Implement fetchArticles() method.
-    }
 }
