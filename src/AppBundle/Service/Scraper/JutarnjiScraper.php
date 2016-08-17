@@ -87,9 +87,11 @@ class JutarnjiScraper extends BaseScraper
             $article->setLink($url);
             $article->setSource('jutarnji.hr');
             $article->setMediaLink(reset($media));
-            $article->setDatePublished($date_published);
+           // $article->setDatePublished($date_published);
             $article->addCategory($cat);
             $article->setVisible(true);
+
+            $articles[]=$article;
         }
         return $articles;
     }

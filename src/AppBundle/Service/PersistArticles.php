@@ -11,7 +11,6 @@ class PersistArticles
 
     /**
      * PersistArticles constructor.
-     * @param $articles
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
