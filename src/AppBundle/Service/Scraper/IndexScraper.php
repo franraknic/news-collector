@@ -9,6 +9,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use AppBundle\Entity\Article;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Doctrine\ORM\EntityManager;
+use AppBundle\Service\Scraper\CategoryId;
 
 
 class IndexScraper extends BaseScraper
@@ -31,11 +32,11 @@ class IndexScraper extends BaseScraper
     protected function getSourcePages()
     {
         $sourcePages = array(
-            1 => 'http://www.index.hr/vijesti/rubrika/hrvatska/22.aspx',
-            2 => 'http://www.index.hr/vijesti/rubrika/zagreb/1553.aspx',
-            3 => 'http://www.index.hr/vijesti/rubrika/regija/1540.aspx',
-            4 => 'http://www.index.hr/vijesti/rubrika/svijet/23.aspx',
-            5 => 'http://www.index.hr/vijesti/rubrika/crna-kronika/46.aspx'
+            CategoryId::hrvatska => 'http://www.index.hr/vijesti/rubrika/hrvatska/22.aspx',
+            CategoryId::zagreb => 'http://www.index.hr/vijesti/rubrika/zagreb/1553.aspx',
+            CategoryId::regija => 'http://www.index.hr/vijesti/rubrika/regija/1540.aspx',
+            CategoryId::svijet => 'http://www.index.hr/vijesti/rubrika/svijet/23.aspx',
+            CategoryId::crna_kronika => 'http://www.index.hr/vijesti/rubrika/crna-kronika/46.aspx'
         );
 
         return $sourcePages;
