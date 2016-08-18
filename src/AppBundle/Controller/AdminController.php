@@ -23,10 +23,10 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/option_1", name="option_1")
+     * @Route("/admin/article", name="article")
      * @Template()
      */
-    public function option_1Action(Request $request)
+    public function articleAction(Request $request)
     {
         //Podešavanje vidljivosti pojedinačnih članaka
 
@@ -76,10 +76,10 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/option_2", name="option_2")
+     * @Route("/admin/category", name="categories")
      * @Template()
      */
-    public function option_2Action(Request $request)
+    public function categoryAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Category');

@@ -42,15 +42,24 @@ class DefaultController extends Controller
      */
     public function categoryAction(Request $request, $category_id)
     {
-        $rep = $this->getDoctrine()->getRepository('AppBundle:Category');
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Article');
+        $query = $repository->createQueryBuilder('a')
+            ->innerJoin('a.categories', 'c')
+            ->where('c.visible = 1 AND a.visible = 1 AND c.id='.$category_id);
 
-        $cat = $rep->findOneBy(array('id' => $category_id, 'visible' => true));
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            15/*limit per page*/,array(
+                'defaultSortFieldName' => array('a.dateScraped', 'a.source'),
+                'defaultSortDirection' => 'dsc',
+            )
+        );
 
-        if(empty($cat)){
-            throw $this->createNotFoundException("Nažalost, kategorija nije dostupna!");
-        }
-
-        return array('articles' => $cat->getArticles());
+        $articles = $query->getQuery()->getResult();
+        return array('articles' => $articles, 'pagination' => $pagination);
     }
 
     /**
