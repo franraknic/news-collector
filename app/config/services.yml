@@ -7,3 +7,17 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    index-scraper:
+        class: AppBundle\Service\Scraper\IndexScraper
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+
+    jutarnji-scraper:
+        class: AppBundle\Service\Scraper\JutarnjiScraper
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+
+    persist-articles:
+        class: AppBundle\Service\PersistArticles
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
