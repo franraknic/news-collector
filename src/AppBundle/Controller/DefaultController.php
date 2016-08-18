@@ -23,8 +23,6 @@ class DefaultController extends Controller
             ->where('c.visible = 1 AND a.visible = 1')
             ->orderBy('a.dateScraped','DESC');
         $articles = $query->getQuery()->getResult();
-
-
         return array('articles' => $articles);
     }
 

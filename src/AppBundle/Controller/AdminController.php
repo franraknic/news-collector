@@ -42,9 +42,13 @@ class AdminController extends Controller
         foreach ($articles as $article) {
 
             if ($article->getVisible()) {
-                $form->add($article->getId(), CheckboxType::class, array('required' => false, 'data' => true, 'label' => $article->getTitle()));
+
+
+                $form->add($article->getId(), CheckboxType::class,
+                    array('required' => false, 'data' => true, 'label' => $article->getTitle()));
             } else {
-                $form->add($article->getId(), CheckboxType::class, array('required' => false, 'data' => false, 'label' => $article->getTitle()));
+                $form->add($article->getId(), CheckboxType::class,
+                    array('required' => false, 'data' => false, 'label' => $article->getTitle()));
             }
         }
         $form = $form->getForm();
@@ -90,9 +94,11 @@ class AdminController extends Controller
             if ($category->getVisible()) {
 
 
-                $form->add($category->getId(), CheckboxType::class, array('required' => false, 'data' => true, 'label' => $category->getName()));
+                $form->add($category->getId(), CheckboxType::class,
+                    array('required' => false, 'data' => true, 'label' => $category->getName()));
             } else {
-                $form->add($category->getId(), CheckboxType::class, array('required' => false, 'data' => false, 'label' => $category->getName()));
+                $form->add($category->getId(), CheckboxType::class,
+                    array('required' => false, 'data' => false, 'label' => $category->getName()));
             }
         }
         $form = $form->add('save', SubmitType::class, array('label' => 'Unesi'))->getForm();
@@ -115,5 +121,27 @@ class AdminController extends Controller
             return $this->redirectToRoute('adminpage');
         }
         return array('categories' => $category, 'form' => $form->createView());
+    }
+
+    /**
+     * @Route("/admin/scraping-info", name="show_scraping_info")
+     * @Template("AppBundle:Default:scraping_info.html.twig")
+     */
+    public function showScrapingInfo(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $repositoryA = $em->getRepository('AppBundle:Article');
+        $query = $repositoryA->createQueryBuilder('a')
+            ->innerJoin('a.categories', 'c');
+        $sourceQuery = $repositoryA->createQueryBuilder('a')
+            ->select('a.source')
+            ->distinct();
+        $sources = $sourceQuery->getQuery()->getResult();
+        $articles = $query->getQuery()->getResult();
+        $repositoryB = $em->getRepository('AppBundle:Category');
+        $cats = $repositoryB->findAll();
+        return array('categories' => $cats, 'articles' => $articles, 'sources' => $sources);
+
     }
 }
