@@ -20,24 +20,14 @@ class ScrapeCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        switch ($input->getArgument('source')) {
-            case 'jutarnji':
-                $scraper = $this->getContainer()->get('jutarnji-scraper');
+        $persistence = $this->getContainer()->get('persist-articles');
+        $sources = array('jutarnji' => 'jutarnji-scraper', 'index' => 'index-scraper');
+        foreach ($sources as $arg => $cont) {
+            if ($input->getArgument('source') == $arg) {
+                $scraper = $this->getContainer()->get($cont);
                 $articles = $scraper->fetchArticles();
-                $persistence = $this->getContainer()->get('persist-articles');
                 $persistence->persistArticles($articles);
-                break;
-
-            case 'index':
-                $scraper = $this->getContainer()->get('index-scraper');
-                $articles = $scraper->fetchArticles();
-                $persistence = $this->getContainer()->get('persist-articles');
-                $persistence->persistArticles($articles);
-                break;
-
-            default:
-                $output->writeln('Invalid argument! Valid sources are: jutarnji index');
-
+            }
         }
     }
 }
