@@ -52,25 +52,4 @@ class DefaultController extends Controller
         $article = $rep->findOneBy(array('id' => $id));
         return array('article' => $article);
     }
-
-    /**
-     * @Route("/scraping-info", name="show_scraping_info")
-     * @Template("AppBundle:Default:scraping_info.html.twig")
-     */
-    public function showScrapingInfo(Request $request){
-
-        $em = $this->getDoctrine()->getManager();
-        $repositoryA = $em->getRepository('AppBundle:Article');
-        $query = $repositoryA->createQueryBuilder('a')
-            ->innerJoin('a.categories', 'c');
-        $sourceQuery = $repositoryA->createQueryBuilder('a')
-            ->select('a.source')
-            ->distinct();
-        $sources = $sourceQuery->getQuery()->getResult();
-        $articles = $query->getQuery()->getResult();
-        $repositoryB = $em->getRepository('AppBundle:Category');
-        $cats = $repositoryB->findAll();
-        return array( 'categories' => $cats, 'articles' => $articles, 'sources' => $sources);
-
-    }
 }
