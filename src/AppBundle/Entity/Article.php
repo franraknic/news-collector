@@ -38,11 +38,6 @@ class Article {
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $datePublished;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
     private $dateScraped;
 
     /**
@@ -154,31 +149,6 @@ class Article {
     {
         return $this->source;
     }
-
-    /**
-     * Set datePublished
-     *
-     * @param \DateTime $datePublished
-     *
-     * @return Article
-     */
-    public function setDatePublished($datePublished)
-    {
-        $this->datePublished = $datePublished;
-
-        return $this;
-    }
-
-    /**
-     * Get datePublished
-     *
-     * @return \DateTime
-     */
-    public function getDatePublished()
-    {
-        return $this->datePublished;
-    }
-
     /**
      * Set dateScraped
      *
