@@ -28,9 +28,9 @@ class JutarnjiScraper extends BaseScraper
             CategoryId::hrvatska => 'http://www.jutarnji.hr/vijesti/hrvatska',
             CategoryId::svijet => 'http://www.jutarnji.hr/vijesti/svijet',
             CategoryId::crna_kronika => 'http://www.jutarnji.hr/vijesti/crna-kronika',
-            //CategoryId::nogomet => 'http://www.jutarnji.hr/sport/nogomet',
-            //CategoryId::kosarka => 'http://www.jutarnji.hr/sport/kosarka',
-            //CategoryId::tenis => 'http://www.jutarnji.hr/sport/tenis',
+            CategoryId::nogomet => 'http://www.jutarnji.hr/sport/nogomet',
+            CategoryId::kosarka => 'http://www.jutarnji.hr/sport/kosarka',
+            CategoryId::tenis => 'http://www.jutarnji.hr/sport/tenis',
             CategoryId::financije_i_trzista => 'http://www.jutarnji.hr/biznis/financije-i-trzista',
             CategoryId::tvrtke => 'http://www.jutarnji.hr/biznis/tvrtke',
             CategoryId::karijere => 'http://www.jutarnji.hr/biznis/karijere',
@@ -54,33 +54,56 @@ class JutarnjiScraper extends BaseScraper
             echo "Scraping: " . $url . "\n";
             $article = new Article();
             $crawler = $client->request('GET', $url);
-            $title = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > h1')
-                ->each(function ($node) {
 
-                    return $node->text();
-                });
-            $content = $crawler->filter('body > div.container > section > div.row.article_body > div.col-sm-8 > div > section > div')
-                ->each(function ($node) {
+            if($id == 6 || $id == 7 || $id == 8){
 
-                    return $node->text();
-                });
-            $media = $crawler->filter('body > div.container > section > div:nth-child(2) > div > section > article > div > div.img-container.picture > img')
-                ->each(function ($node) {
+                $title = $crawler->filter('body > div.container > section > div.row.articleWrapper > div.header.ahh.col-sm-12 > h1')
+                    ->each(function ($node) {
 
-                    return $node->attr('src');
-                });
+                        return $node->text();
+                    });
+
+                $article->setTitle(reset($title));
+                $article->setContent(reset($content));
+                $article->setLink($url);
+                $article->setSource('jutarnji.hr');
+                $article->setMediaLink(reset($media));
+                $article->setDateScraped(new \DateTime('now'));
+                $article->addCategory($cat);
+                $article->setVisible(true);
+
+                $articles[] = $article;
+            }else {
 
 
-            $article->setTitle(reset($title));
-            $article->setContent(reset($content));
-            $article->setLink($url);
-            $article->setSource('jutarnji.hr');
-            $article->setMediaLink(reset($media));
-            $article->setDateScraped(new \DateTime('now'));
-            $article->addCategory($cat);
-            $article->setVisible(true);
+                $title = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > h1')
+                    ->each(function ($node) {
 
-            $articles[]=$article;
+                        return $node->text();
+                    });
+                $content = $crawler->filter('body > div.container > section > div.row.article_body > div.col-sm-8 > div > section > div')
+                    ->each(function ($node) {
+
+                        return $node->text();
+                    });
+                $media = $crawler->filter('body > div.container > section > div:nth-child(2) > div > section > article > div > div.img-container.picture > img')
+                    ->each(function ($node) {
+
+                        return $node->attr('src');
+                    });
+
+
+                $article->setTitle(reset($title));
+                $article->setContent(reset($content));
+                $article->setLink($url);
+                $article->setSource('jutarnji.hr');
+                $article->setMediaLink(reset($media));
+                $article->setDateScraped(new \DateTime('now'));
+                $article->addCategory($cat);
+                $article->setVisible(true);
+
+                $articles[] = $article;
+            }
         }
         return $articles;
     }
