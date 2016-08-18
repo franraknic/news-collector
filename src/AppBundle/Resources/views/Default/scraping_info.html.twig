@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <h1>Scraping info</h1>
-    <p>Articles scraped: {{ numArticles }}</p>
+    <p>Articles in database: {{ articles|length }}</p>
     {% for category in categories %}
-    <p>Articles in {{ category.name }}: </p>
+        <p>Number of articles in {{ category.name }}: {{ category.articles|length }}</p>
         {% endfor %}
+    {% for source in sources %}
+        <p>Number of articles from {{ source.source }}: </p>
+    {% endfor %}
 {% endblock %}
