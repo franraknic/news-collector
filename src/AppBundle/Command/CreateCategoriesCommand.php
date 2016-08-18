@@ -23,7 +23,7 @@ class CreateCategoriesCommand extends ContainerAwareCommand
         $em = $doc->getManager();
         $categories = array(
             CategoryId::hrvatska => 'Hrvatska',
-            CategoryId::zagreb => 'zagreb',
+            CategoryId::zagreb => 'Zagreb',
             CategoryId::regija => 'Regija',
             CategoryId::svijet => 'Svijet',
             CategoryId::crna_kronika => 'Crna kronika',
