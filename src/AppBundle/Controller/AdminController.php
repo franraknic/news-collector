@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -33,7 +32,7 @@ class AdminController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Article');
-        $articles = $repository->findAll();
+        $articles = $repository->findBy(array(), array('dateScraped'=>'desc'));
 
 
         $defaultData = array();
@@ -106,7 +105,6 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-            // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
             foreach ($data as $id => $visible) {
                 if ($visible == false) {
