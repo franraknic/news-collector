@@ -22,17 +22,17 @@ class CreateCategoriesCommand extends ContainerAwareCommand
         $doc = $this->getContainer()->get('doctrine');
         $em = $doc->getManager();
         $categories = array(
-            CategoryId::hrvatska => 'hrvatska',
+            CategoryId::hrvatska => 'Hrvatska',
             CategoryId::zagreb => 'zagreb',
-            CategoryId::regija => 'regija',
-            CategoryId::svijet => 'svijet',
-            CategoryId::crna_kronika => 'crna kronika',
-            CategoryId::nogomet => 'nogomet',
-            CategoryId::kosarka => 'kosarka',
-            CategoryId::tenis => 'tenis',
-            CategoryId::financije_i_trzista => 'financije i trzista',
-            CategoryId::tvrtke => 'tvrtke',
-            CategoryId::karijere => 'karijere',
+            CategoryId::regija => 'Regija',
+            CategoryId::svijet => 'Svijet',
+            CategoryId::crna_kronika => 'Crna kronika',
+            CategoryId::nogomet => 'Nogomet',
+            CategoryId::kosarka => 'Košarka',
+            CategoryId::tenis => 'Tenis',
+            CategoryId::financije_i_trzista => 'Financije i tržišta',
+            CategoryId::tvrtke => 'Tvrtke',
+            CategoryId::karijere => 'Karijere',
           );
 
         foreach ($categories as $id => $category) {
