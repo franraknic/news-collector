@@ -70,7 +70,7 @@ class DefaultController extends Controller
         $articles = $query->getQuery()->getResult();
         $repositoryB = $em->getRepository('AppBundle:Category');
         $cats = $repositoryB->findAll();
-        return array( 'categories' => $cats, 'articles' => $articles, 'sources' => $sources );
+        return array( 'categories' => $cats, 'articles' => $articles, 'sources' => $sources);
 
     }
 }
