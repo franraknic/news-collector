@@ -1,10 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Scraping info</h1>
-    <p>Articles in database: {{ articles|length }}</p>
+    <h1>Scraping information</h1>
+    <p></p>
+    <h4>General</h4>
+    <p>Total articles: {{ articles|length }}</p>
+    {% set n = 0 %}
+    {% for article in articles %}
+        {% if article.visible == true %}
+            {% set n = n + 1 %}
+            {% endif %}
+        {% endfor %}
+    <p>Total visible articles: {{ n }}</p>
+    <h4>Articles by category</h4>
     {% for category in categories %}
         <p>Number of articles in {{ category.name }}: {{ category.articles|length }}</p>
         {% endfor %}
+    <h4>Articles by source</h4>
     {% for source in sources %}
         {% set i = 0 %}
         <p>Number of articles from {{ source.source }}:

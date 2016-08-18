@@ -95,7 +95,7 @@ class JutarnjiScraper extends BaseScraper
         $articleUrls = array();
         $client = new Client();
         $crawler = $client->request('GET', $sourcePageUrl);
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 15; $i++) {
             $newArticleUrls = $crawler->filter('body > div.container > section > div.row.jl-scroll-container > div.col-sm-8 > section:nth-child(2) > article:nth-child(' . $i . ') > div > div.media-body > h4 > a ')
                 ->each(function ($node) {
                     return $node->first()->attr('href');
