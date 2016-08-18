@@ -64,6 +64,7 @@ class JutarnjiScraper extends BaseScraper
                     });
 
                 $article->setTitle(reset($title));
+                $article->setContent(" ");
                 $article->setLink($url);
                 $article->setSource('jutarnji.hr');
                 $article->setDateScraped(new \DateTime('now'));
