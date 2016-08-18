@@ -20,7 +20,8 @@ class DefaultController extends Controller
         $repository = $em->getRepository('AppBundle:Article');
         $query = $repository->createQueryBuilder('a')
             ->innerJoin('a.categories', 'c')
-            ->where('c.visible = 1 AND a.visible = 1');
+            ->where('c.visible = 1 AND a.visible = 1')
+            ->orderBy('a.dateScraped','DESC');
         $articles = $query->getQuery()->getResult();
 
 

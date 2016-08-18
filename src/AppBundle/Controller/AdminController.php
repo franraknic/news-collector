@@ -42,8 +42,6 @@ class AdminController extends Controller
         foreach ($articles as $article) {
 
             if ($article->getVisible()) {
-
-
                 $form->add($article->getId(), CheckboxType::class, array('required' => false, 'data' => true, 'label' => $article->getTitle()));
             } else {
                 $form->add($article->getId(), CheckboxType::class, array('required' => false, 'data' => false, 'label' => $article->getTitle()));
