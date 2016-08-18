@@ -2,7 +2,16 @@
 {% block body %}
     <h1>News Collector</h1>
     <a href="{{ path('adminpage') }}">Admin Login</a>
-    {% for article in articles %}
+    <table>
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Source', 'a.source') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+            <th{% if pagination.isSorted('a.dateScraped') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date', 'a.dateScraped') }}</th>
+        </tr>
+
+        {# table body #}
+        {% for article in pagination %}
 
             <h2>{{ article.title }}</h2>
             <p>
@@ -10,10 +19,16 @@
             </p>
             <p>
                 kategorija: {% for category in article.categories %}
-                <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
+                    <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
                 {% endfor %}
                 <br><br> izvor:<a href="{{ article.link }}" target='_blank'  >{{ article.source }}</a></p>
             <a href="{{ path('show_article', {'id': article.id}) }}">Više...</a>
             <hr>
-    {% endfor %}
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
 {% endblock %}

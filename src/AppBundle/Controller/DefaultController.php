@@ -20,10 +20,20 @@ class DefaultController extends Controller
         $repository = $em->getRepository('AppBundle:Article');
         $query = $repository->createQueryBuilder('a')
             ->innerJoin('a.categories', 'c')
-            ->where('c.visible = 1 AND a.visible = 1')
-            ->orderBy('a.dateScraped','DESC');
+            ->where('c.visible = 1 AND a.visible = 1');
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            15/*limit per page*/,array(
+                'defaultSortFieldName' => array('a.dateScraped', 'a.source'),
+                'defaultSortDirection' => 'dsc',
+            )
+        );
+
         $articles = $query->getQuery()->getResult();
-        return array('articles' => $articles);
+        return array('articles' => $articles, 'pagination' => $pagination);
     }
 
     /**
