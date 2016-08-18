@@ -125,9 +125,9 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/scraping-info", name="show_scraping_info")
-     * @Template("AppBundle:Default:scraping_info.html.twig")
+     * @Template()
      */
-    public function showScrapingInfo(Request $request)
+    public function showScrapingInfoAction(Request $request)
     {
 
         $em = $this->getDoctrine()->getManager();
