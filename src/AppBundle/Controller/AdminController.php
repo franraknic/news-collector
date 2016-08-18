@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,16 +23,16 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/option_1", name="option_1")
+     * @Route("/admin/article", name="article")
      * @Template()
      */
-    public function option_1Action(Request $request)
+    public function articleAction(Request $request)
     {
         //Podešavanje vidljivosti pojedinačnih članaka
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Article');
-        $articles = $repository->findAll();
+        $articles = $repository->findBy(array(), array('dateScraped'=>'desc'));
 
 
         $defaultData = array();
@@ -77,10 +76,10 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/option_2", name="option_2")
+     * @Route("/admin/category", name="categories")
      * @Template()
      */
-    public function option_2Action(Request $request)
+    public function categoryAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Category');
@@ -106,7 +105,6 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-            // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
             foreach ($data as $id => $visible) {
                 if ($visible == false) {
