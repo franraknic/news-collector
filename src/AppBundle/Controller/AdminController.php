@@ -69,7 +69,7 @@ class AdminController extends Controller
                 $result = $query->getResult();
             }
 
-            return $this->redirectToRoute('option_1');;
+            return $this->redirectToRoute('adminpage');;
         }
 
 
