@@ -3,7 +3,55 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}News Collector{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <style>
+                h1,h2{
+                    font-family:Helvetica;
+                }
+                h1{
+                    font-size: 50px;
+                }
+                html{
+                    background-color:lightskyblue;
+                }
+                body{
+                    width: 70%;
+                    margin-left: 15%;
+                    margin-right: 15%;
+                    background-color:#EEEEEE;
+                    padding:80px 40px;
+                    border:1px black solid;
+                    box-shadow: 10px 10px 5px #888888;
+                    margin-bottom:20px;
+                }
+                header{
+                    background-color: steelblue;
+                }
+                .admin_login{
+                    float:right;
+                }
+                a:link, a:visited ,button {
+                    background-color: steelblue;
+                    color: white;
+                    padding: 5px 10px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    border:none;
+                }
+                a:hover, a:active ,button:hover {
+                    background-color:powderblue ;
+                    color: white;
+                    padding: 5px 10px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    border:none;
+                }
+
+            </style>
+
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>

@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
+
+
+
 {% block body %}
+    <header>
     <h1>News Collector</h1>
-    <a href="{{ path('adminpage') }}">Admin Login</a>
+        <div class="admin_login">
+        <a href="{{ path('adminpage') }}">Admin Login</a>
+        </div>
+    </header>
     <table>
         <tr>
             {# sorting of properties based on query components #}

@@ -1,25 +1,6 @@
 {% form_theme form 'form_table_layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
-
-{% block stylesheets %}
-    <style>
-table#form {
-    font-size:25px;
-    }
-button {
-    font-size:25px;
-}
-        tr {
-            height:35px;
-        }
-        input[type=checkbox]{
-            transform: scale(1.5);
-
-            /* Webkit browsers*/
-            -webkit-transform: scale(1.5);
-        }
-    </style>
-{% endblock %}
 
 {% block body %}
     {{ form_start(form) }}
