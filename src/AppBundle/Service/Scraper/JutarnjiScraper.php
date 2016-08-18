@@ -6,8 +6,6 @@ use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
 use Doctrine\ORM\EntityManager;
 use Goutte\Client;
-use Symfony\Component\DomCrawler\Crawler;
-use AppBundle\Service\Scraper\CategoryId;
 
 class JutarnjiScraper extends BaseScraper
 {
@@ -30,9 +28,9 @@ class JutarnjiScraper extends BaseScraper
             CategoryId::hrvatska => 'http://www.jutarnji.hr/vijesti/hrvatska',
             CategoryId::svijet => 'http://www.jutarnji.hr/vijesti/svijet',
             CategoryId::crna_kronika => 'http://www.jutarnji.hr/vijesti/crna-kronika',
-            CategoryId::nogomet => 'http://www.jutarnji.hr/sport/nogomet',
-            CategoryId::kosarka => 'http://www.jutarnji.hr/sport/kosarka',
-            CategoryId::tenis => 'http://www.jutarnji.hr/sport/tenis',
+            //CategoryId::nogomet => 'http://www.jutarnji.hr/sport/nogomet',
+            //CategoryId::kosarka => 'http://www.jutarnji.hr/sport/kosarka',
+            //CategoryId::tenis => 'http://www.jutarnji.hr/sport/tenis',
             CategoryId::financije_i_trzista => 'http://www.jutarnji.hr/biznis/financije-i-trzista',
             CategoryId::tvrtke => 'http://www.jutarnji.hr/biznis/tvrtke',
             CategoryId::karijere => 'http://www.jutarnji.hr/biznis/karijere',
@@ -72,22 +70,13 @@ class JutarnjiScraper extends BaseScraper
                     return $node->attr('src');
                 });
 
-            $date_published = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > ul > li:nth-child(4) > p')
-                ->each(function ($node) {
-                    $d = $node->text();
-                    $d = substr($d, 1, 10);
-                    $d = str_replace('.', '-', $d);
-                    $d = strtotime($d);
-                    return date('Y-m-d', $d);
-                });
-
 
             $article->setTitle(reset($title));
             $article->setContent(reset($content));
             $article->setLink($url);
             $article->setSource('jutarnji.hr');
             $article->setMediaLink(reset($media));
-           // $article->setDatePublished($date_published);
+            $article->setDateScraped(new \DateTime('now'));
             $article->addCategory($cat);
             $article->setVisible(true);
 
