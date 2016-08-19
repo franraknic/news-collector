@@ -23,18 +23,32 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/article", name="article")
+     * @Route("/admin/article/{page}",  defaults={"page": "1"} , name="article")
      * @Template()
      */
-    public function articleAction(Request $request)
+    public function articleAction(Request $request, $page)
     {
         //Podešavanje vidljivosti pojedinačnih članaka
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Article');
-        $articles = $repository->findBy(array(), array('dateScraped'=>'desc'));
+        //$articles = $repository->findBy(array(), array('dateScraped'=>'desc'));
 
 
+        $query = $repository->createQueryBuilder('a');
+
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', $page)/*page number*/,
+            20/*limit per page*/,array(
+                'defaultSortFieldName' => array('a.dateScraped', 'a.source'),
+                'defaultSortDirection' => 'dsc',
+            )
+        );
+
+        $articles =$pagination;
         $defaultData = array();
         $form = $this->createFormBuilder($defaultData)->add('save', SubmitType::class, array('label' => 'Unesi'));
 
@@ -72,7 +86,7 @@ class AdminController extends Controller
         }
 
 
-        return array('articles' => $articles, 'form' => $form->createView());
+        return array('pagination' => $articles, 'form' => $form->createView());
     }
 
     /**

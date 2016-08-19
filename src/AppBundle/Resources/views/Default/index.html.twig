@@ -22,7 +22,7 @@
 
             <h2>{{ article.title }}</h2>
             <p>
-                Objavljeno: {{ article.dateScraped|date('d.m.Y.') }}
+                Objavljeno: {{ article.dateScraped|date('d.m.Y. H:i') }}
             </p>
             <p>
                 kategorija: {% for category in article.categories %}
