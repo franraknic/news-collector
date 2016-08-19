@@ -51,7 +51,6 @@ class JutarnjiScraper extends BaseScraper
         $articles = array();
         $client = new Client();
         foreach ($articleUrls as $url) {
-            echo "Scraping: " . $url . "\n";
             $article = new Article();
             $crawler = $client->request('GET', $url);
 

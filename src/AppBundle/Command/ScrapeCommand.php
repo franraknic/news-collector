@@ -24,9 +24,11 @@ class ScrapeCommand extends ContainerAwareCommand
         $sources = array('jutarnji' => 'jutarnji-scraper', 'index' => 'index-scraper');
         foreach ($sources as $arg => $cont) {
             if ($input->getArgument('source') == $arg) {
+                $output->writeln(date("Y-m-d H:i:s")." Starting: ". $cont);
                 $scraper = $this->getContainer()->get($cont);
                 $articles = $scraper->fetchArticles();
                 $persistence->persistArticles($articles);
+                $output->writeln(date("Y-m-d H:i:s").' Scraped: '. $arg);
             }
         }
     }
