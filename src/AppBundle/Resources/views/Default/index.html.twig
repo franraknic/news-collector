@@ -27,7 +27,7 @@
 
         {# table body #}
         {% for article in pagination %}
-
+<div class="article">
             <h2>{{ article.title }}</h2>
             <p>
                 Objavljeno: {{ article.dateScraped|date('d.m.Y. H:i') }}
@@ -38,7 +38,8 @@
                 {% endfor %}
                 <br><br> izvor: <a href="{{ article.link }}" target='_blank'  >{{ article.source }}</a></p>
             <a href="{{ path('show_article', {'id': article.id}) }}">Više...</a>
-            <hr>
+</div>
+
         {% endfor %}
     </table>
     {# display navigation #}
