@@ -5,6 +5,7 @@
         {% if article.visible == true %}
 
             <h2>{{ article.title }}</h2>
+            <img src="{{ article.mediaLink }}">
             <div>{{ article.content }}</div>
             <p>
                 Objavljeno: {{ article.dateScraped|date('d.m.Y.') }}

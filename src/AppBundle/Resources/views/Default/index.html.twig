@@ -13,6 +13,9 @@
     {%  for category in categories %}
     <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
         {% endfor %}
+        {%  if categories == null %}
+            <a href="{{ path('homepage') }}">Početna</a>
+            {% endif %}
     </span>
     <table>
         <tr>

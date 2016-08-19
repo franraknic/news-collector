@@ -66,12 +66,17 @@ class IndexScraper extends BaseScraper
                 // todo print information about url
                 continue;
             }
+            $media=$crawler->filter( '#ContentPlaceHolder1_articleimage')->first()->attr("src");
+
+
 
             $article->setLink($articleUrl);
             $article->setSource("index.hr");
             $article->setVisible(true);
             $article->addCategory($cat);
             $article->setDateScraped(new \DateTime('now'));
+            $article->setMediaLink($media);
+
 
             $nodeList = $crawler->filter('#article_text  p');
             $parsedNodes = $nodeList->each(function ($node) {
