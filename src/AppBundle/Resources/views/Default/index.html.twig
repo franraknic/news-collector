@@ -28,7 +28,7 @@
                 kategorija: {% for category in article.categories %}
                     <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
                 {% endfor %}
-                <br><br> izvor:<a href="{{ article.link }}" target='_blank'  >{{ article.source }}</a></p>
+                <br><br> izvor: <a href="{{ article.link }}" target='_blank'  >{{ article.source }}</a></p>
             <a href="{{ path('show_article', {'id': article.id}) }}">Više...</a>
             <hr>
         {% endfor %}

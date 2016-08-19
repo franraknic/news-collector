@@ -13,7 +13,7 @@
                 kategorija: {% for category in article.categories %}
                     {{ category.name }}
                 {% endfor %}
-                <br> izvor:<a href="{{ article.link }}">{{ article.source }}</a></p>
+                <br> izvor: <a href="{{ article.link }}">{{ article.source }}</a></p>
         {% endif %}
     <br>
     <a href="{{ path('homepage') }}">Natrag</a>
