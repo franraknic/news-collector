@@ -9,6 +9,11 @@
         <a href="{{ path('adminpage') }}">Admin Login</a>
         </div>
     </header>
+    <span>
+    {%  for category in categories %}
+    <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
+        {% endfor %}
+    </span>
     <table>
         <tr>
             {# sorting of properties based on query components #}

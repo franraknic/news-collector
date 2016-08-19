@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Article;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -32,8 +33,11 @@ class DefaultController extends Controller
             )
         );
 
-        $articles = $query->getQuery()->getResult();
-        return array('articles' => $articles, 'pagination' => $pagination);
+        $categories=$em->getRepository('AppBundle:Category')->createQueryBuilder('c')
+            ->where('c.visible=1')->getQuery()->getResult();
+
+
+        return array('pagination' => $pagination, 'categories' => $categories);
     }
 
     /**
@@ -58,8 +62,8 @@ class DefaultController extends Controller
             )
         );
 
-        $articles = $query->getQuery()->getResult();
-        return array('articles' => $articles, 'pagination' => $pagination);
+
+        return array('pagination' => $pagination , 'categories' => null);
     }
 
     /**
