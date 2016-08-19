@@ -134,6 +134,7 @@ class AdminController extends Controller
                 $query = $em->createQuery("UPDATE AppBundle:Article a SET a.visible =" . $visible . " WHERE a.source='".str_replace('-', '.',$source)."'");
                 $result = $query->getResult();
             }
+            return $this->redirectToRoute('adminpage');;
         }
 
         return array('form' => $form->createView());
