@@ -62,8 +62,27 @@ class JutarnjiScraper extends BaseScraper
                         return $node->text();
                     });
 
+                $content = $crawler->filter('.mainContent > section > div')->first()->filter('p')->each(function ($node) {
+
+                    return $node->text();
+                });
+                $i=0;
+                foreach ($content as $str){
+                    if(strpos($str,"Vezane vijesti")){
+                        unset($content[$i]);
+                        $content=array_values($content);
+
+                    }
+                    $i++;
+                }
+
+
+
+                $content=implode(" ",$content);
+
+
                 $article->setTitle(reset($title));
-                $article->setContent(" ");
+                $article->setContent($content);
                 $article->setLink($url);
                 $article->setSource('jutarnji.hr');
                 $article->setDateScraped(new \DateTime('now'));
