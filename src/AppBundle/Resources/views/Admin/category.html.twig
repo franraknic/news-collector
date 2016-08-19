@@ -1,0 +1,10 @@
+{% form_theme form 'form_table_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    <a href="{{ path('adminpage') }}">Natrag</a>
+{% endblock %}

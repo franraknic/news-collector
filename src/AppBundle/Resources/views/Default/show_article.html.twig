@@ -3,18 +3,20 @@
     <h1>News Collector</h1>
 
         {% if article.visible == true %}
-
+<div class="article">
             <h2>{{ article.title }}</h2>
-            <div>{{ article.content }}</div>
+            <img src="{{ article.mediaLink }}">
+            <div><p>{{ article.content }}</p></div>
             <p>
-                Objavljeno: {{ article.datePublished|date('d.m.Y.') }}
+                Objavljeno: {{ article.dateScraped|date('d.m.Y.') }}
             </p>
             <p>
                 kategorija: {% for category in article.categories %}
                     {{ category.name }}
                 {% endfor %}
-                <br> izvor:<a href="{{ article.link }}">{{ article.source }}</a></p>
+                <br> izvor: <a href="{{ article.link }}">{{ article.source }}</a></p>
         {% endif %}
+    </div>
     <br>
     <a href="{{ path('homepage') }}">Natrag</a>
 {% endblock %}

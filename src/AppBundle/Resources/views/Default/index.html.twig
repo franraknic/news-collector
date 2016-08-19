@@ -1,19 +1,50 @@
 {% extends 'base.html.twig' %}
-{% block body %}
-    <h1>News Collector</h1>
-    <a href="{{ path('login') }}">Admin Login</a>
-    {% for article in articles %}
 
+
+
+{% block body %}
+    <header>
+    <h1>News Collector</h1>
+        <div class="admin_login">
+        <a href="{{ path('adminpage') }}">Admin Login</a>
+        </div>
+    </header>
+    <span>
+    {%  for category in categories %}
+    <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
+        {% endfor %}
+        {%  if categories == null %}
+            <a href="{{ path('homepage') }}">Početna</a>
+            {% endif %}
+    </span>
+    <table>
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Source', 'a.source') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+            <th{% if pagination.isSorted('a.dateScraped') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date', 'a.dateScraped') }}</th>
+        </tr>
+
+        {# table body #}
+        {% for article in pagination %}
+<div class="article">
             <h2>{{ article.title }}</h2>
             <p>
-                Objavljeno: {{ article.datePublished|date('d.m.Y.') }}
+                Objavljeno: {{ article.dateScraped|date('d.m.Y. H:i') }}
             </p>
             <p>
                 kategorija: {% for category in article.categories %}
-                <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
+                    <a href="{{ path('category', {'category_id': category.id}) }}">  {{ category.name }}</a>
                 {% endfor %}
-                <br><br> izvor:<a href="{{ article.link }}" target='_blank'  >{{ article.source }}</a></p>
+                <br><br> izvor: <a href="{{ article.link }}" target='_blank'  >{{ article.source }}</a></p>
             <a href="{{ path('show_article', {'id': article.id}) }}">Više...</a>
-            <hr>
-    {% endfor %}
+</div>
+
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
 {% endblock %}

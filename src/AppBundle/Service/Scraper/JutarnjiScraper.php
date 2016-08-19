@@ -6,8 +6,6 @@ use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
 use Doctrine\ORM\EntityManager;
 use Goutte\Client;
-use Symfony\Component\DomCrawler\Crawler;
-use AppBundle\Service\Scraper\CategoryId;
 
 class JutarnjiScraper extends BaseScraper
 {
@@ -53,45 +51,76 @@ class JutarnjiScraper extends BaseScraper
         $articles = array();
         $client = new Client();
         foreach ($articleUrls as $url) {
-            echo "Scraping: " . $url . "\n";
             $article = new Article();
             $crawler = $client->request('GET', $url);
-            $title = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > h1')
-                ->each(function ($node) {
+
+            if($id == 6 || $id == 7 || $id == 8){
+
+                $title = $crawler->filter('body > div.container > section > div.row.articleWrapper > div.header.ahh.col-sm-12 > h1')
+                    ->each(function ($node) {
+
+                        return $node->text();
+                    });
+
+                $content = $crawler->filter('.mainContent > section > div')->first()->filter('p')->each(function ($node) {
 
                     return $node->text();
                 });
-            $content = $crawler->filter('body > div.container > section > div.row.article_body > div.col-sm-8 > div > section > div')
-                ->each(function ($node) {
+                $i=0;
+                foreach ($content as $str){
+                    if(strpos($str,"Vezane vijesti")){
+                        unset($content[$i]);
+                        $content=array_values($content);
 
-                    return $node->text();
-                });
-            $media = $crawler->filter('body > div.container > section > div:nth-child(2) > div > section > article > div > div.img-container.picture > img')
-                ->each(function ($node) {
-
-                    return $node->attr('src');
-                });
-
-            $date_published = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > ul > li:nth-child(4) > p')
-                ->each(function ($node) {
-                    $d = $node->text();
-                    $d = substr($d, 1, 10);
-                    $d = str_replace('.', '-', $d);
-                    $d = strtotime($d);
-                    return date('Y-m-d', $d);
-                });
+                    }
+                    $i++;
+                }
 
 
-            $article->setTitle(reset($title));
-            $article->setContent(reset($content));
-            $article->setLink($url);
-            $article->setSource('jutarnji.hr');
-            $article->setMediaLink(reset($media));
-           // $article->setDatePublished($date_published);
-            $article->addCategory($cat);
-            $article->setVisible(true);
 
-            $articles[]=$article;
+                $content=implode(" ",$content);
+
+
+                $article->setTitle(reset($title));
+                $article->setContent($content);
+                $article->setLink($url);
+                $article->setSource('jutarnji.hr');
+                $article->setDateScraped(new \DateTime('now'));
+                $article->addCategory($cat);
+                $article->setVisible(true);
+
+                $articles[] = $article;
+            }else {
+
+
+                $title = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > h1')
+                    ->each(function ($node) {
+
+                        return $node->text();
+                    });
+                $content = $crawler->filter('body > div.container > section > div.row.article_body > div.col-sm-8 > div > section > div')
+                    ->each(function ($node) {
+
+                        return $node->text();
+                    });
+                $media = $crawler->filter('body > div.container > section > div:nth-child(2) > div > section > article > div > div.img-container.picture > img')
+                    ->each(function ($node) {
+
+                        return $node->attr('src');
+                    });
+
+
+                $article->setTitle(reset($title));
+                $article->setContent(reset($content));
+                $article->setLink($url);
+                $article->setSource('jutarnji.hr');
+                $article->setMediaLink(reset($media));
+                $article->setDateScraped(new \DateTime('now'));
+                $article->addCategory($cat);
+                $article->setVisible(true);
+
+                $articles[] = $article;
+            }
         }
         return $articles;
     }
@@ -106,7 +135,7 @@ class JutarnjiScraper extends BaseScraper
         $articleUrls = array();
         $client = new Client();
         $crawler = $client->request('GET', $sourcePageUrl);
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 15; $i++) {
             $newArticleUrls = $crawler->filter('body > div.container > section > div.row.jl-scroll-container > div.col-sm-8 > section:nth-child(2) > article:nth-child(' . $i . ') > div > div.media-body > h4 > a ')
                 ->each(function ($node) {
                     return $node->first()->attr('href');
