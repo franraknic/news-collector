@@ -54,7 +54,7 @@ class JutarnjiScraper extends BaseScraper
             $article = new Article();
             $crawler = $client->request('GET', $url);
 
-            if($id == 6 || $id == 7 || $id == 8){
+            if ($id == 6 || $id == 7 || $id == 8) {
 
                 $title = $crawler->filter('body > div.container > section > div.row.articleWrapper > div.header.ahh.col-sm-12 > h1')
                     ->each(function ($node) {
@@ -62,25 +62,22 @@ class JutarnjiScraper extends BaseScraper
                         return $node->text();
                     });
 
-                $content = $crawler->filter('.mainContent > section > div')->first()->filter('p')->each(function ($node) {
+                $content = $crawler->filter('.mainContent > section > div')->first()->filter('p')->each(function ($node
+                ) {
 
                     return $node->text();
                 });
-                $i=0;
-                foreach ($content as $str){
-                    if(strpos($str,"Vezane vijesti")){
+                $i = 0;
+                foreach ($content as $str) {
+                    if (strpos($str, "Vezane vijesti")) {
                         unset($content[$i]);
-                        $content=array_values($content);
+                        $content = array_values($content);
 
                     }
                     $i++;
                 }
 
-
-
-                $content=implode(" ",$content);
-
-
+                $content = implode(" ", $content);
                 $article->setTitle(reset($title));
                 $article->setContent($content);
                 $article->setLink($url);
@@ -90,8 +87,7 @@ class JutarnjiScraper extends BaseScraper
                 $article->setVisible(true);
 
                 $articles[] = $article;
-            }else {
-
+            } else {
 
                 $title = $crawler->filter('body > div.container > section > div:nth-child(2) > div > div > h1')
                     ->each(function ($node) {
@@ -108,7 +104,6 @@ class JutarnjiScraper extends BaseScraper
 
                         return $node->attr('src');
                     });
-
 
                 $article->setTitle(reset($title));
                 $article->setContent(reset($content));
