@@ -35,9 +35,9 @@ abstract class BaseScraper
         $articles = array();
         foreach ($sourcePages as $sourcePage) {
             $articleUrls = $this->fetchArticleUrlsFromPage($sourcePage);
-            $id = array_search($sourcePage, $sourcePages);
-            $articles1 = $this->processUrls($articleUrls, $id);
-            $articles = array_merge($articles, $articles1);
+            #$id = array_search($sourcePage, $sourcePages);
+            #$articles1 = $this->processUrls($articleUrls, $id);
+            #$articles = array_merge($articles, $articles1);
         }
 
         return $articles;

@@ -17,6 +17,11 @@ services:
         arguments:
             entityManager: "@doctrine.orm.entity_manager"
 
+    jazzera-scraper:
+        class: AppBundle\Service\Scraper\JazzeraScraper
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+
     persist-articles:
         class: AppBundle\Service\PersistArticles
         arguments:

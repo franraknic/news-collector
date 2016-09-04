@@ -8,9 +8,19 @@
 
 namespace AppBundle\Service\Scraper;
 
+use AppBundle\Entity\Article;
+use AppBundle\Entity\Category;
+use Doctrine\ORM\EntityManager;
+use Goutte\Client;
 
 class JazzeraScraper extends BaseScraper
 {
+    protected $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * Returns array of URLs for source pages.
@@ -19,8 +29,9 @@ class JazzeraScraper extends BaseScraper
      */
     protected function getSourcePages()
     {
-        array(
+        return array(
 
+            CategoryId::hrvatska => 'http://balkans.aljazeera.net/tag/hrvatska'
         );
     }
 
@@ -40,7 +51,15 @@ class JazzeraScraper extends BaseScraper
      */
     protected function fetchArticleUrlsFromPage($sourcePageUrl)
     {
-        // TODO: Implement fetchArticleUrlsFromPage() method.
+        $articleUrls = array();
+        $client = new Client();
+        $crawler = $client->request('GET', $sourcePageUrl);
+        $newArticleUrls = $crawler->filter('#main > div.description > h2 > a')
+            ->each(function ($node) {
+                echo $node->first()->attr('href');
+            });
+
+        #$articleUrls = array_merge($articleUrls, $newArticleUrls);
     }
 
 }

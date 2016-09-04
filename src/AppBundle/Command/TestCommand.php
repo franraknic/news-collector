@@ -7,27 +7,25 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ScrapeCommand extends ContainerAwareCommand
+class TestCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('scrape:source')
-            ->setDescription('Scrapes the provided source. Current sources: jutarnji index')
+            ->setName('scrape:test')
+            ->setDescription('Scrapes the provided source without persisting. Current sources: jutarnji index jazzera')
             ->addArgument('source', InputArgument::REQUIRED, 'Source to be scraped!');
 
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $persistence = $this->getContainer()->get('persist-articles');
         $sources = array('jutarnji' => 'jutarnji-scraper', 'index' => 'index-scraper', 'jazzera' => 'jazzera-scraper');
         foreach ($sources as $arg => $cont) {
             if ($input->getArgument('source') == $arg) {
                 $output->writeln(date("Y-m-d H:i:s")." Starting: ". $cont);
                 $scraper = $this->getContainer()->get($cont);
                 $articles = $scraper->fetchArticles();
-                $persistence->persistArticles($articles);
                 $output->writeln(date("Y-m-d H:i:s").' Scraped: '. $arg);
             }
         }
