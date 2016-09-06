@@ -42,7 +42,24 @@ class JazzeraScraper extends BaseScraper
      */
     protected function processUrls($articleUrls, $id)
     {
-        // TODO: Implement processUrls() method.
+        $rep = $this->em->getRepository("AppBundle:Category");
+        $cat = $rep->findOneBy(array("id" => $id));
+        $articles = array();
+        $client = new Client();
+        foreach ($articleUrls as $url) {
+            $article = new Article();
+            $crawler = $client->request('GET', $url);
+            $title = $crawler->filter('#node-565601 > section > section > article > div.wrapper > h1')
+                ->each(function ($node) {
+
+                    return $node->text();
+                });
+
+            echo reset($title);
+            $article->setTitle(reset($title));
+            $articles[] = $article;
+        }
+        return $articles;
     }
 
     /**
@@ -56,9 +73,10 @@ class JazzeraScraper extends BaseScraper
         $crawler = $client->request('GET', $sourcePageUrl);
         $newArticleUrls = $crawler->filter('div.description > h2 > a')
             ->each(function ($node) {
-                return "http://balkans.aljazeera.net".$node->first()->attr('href');
+                echo "http://balkans.aljazeera.net" . $node->first()->attr('href');
             });
         $articleUrls = array_merge($articleUrls, $newArticleUrls);
+        return $articleUrls;
     }
 
 }
