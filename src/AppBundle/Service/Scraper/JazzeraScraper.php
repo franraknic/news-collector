@@ -54,12 +54,11 @@ class JazzeraScraper extends BaseScraper
         $articleUrls = array();
         $client = new Client();
         $crawler = $client->request('GET', $sourcePageUrl);
-        $newArticleUrls = $crawler->filter('#main > div.description > h2 > a')
+        $newArticleUrls = $crawler->filter('div.description > h2 > a')
             ->each(function ($node) {
-                echo $node->first()->attr('href');
+                return "http://balkans.aljazeera.net".$node->first()->attr('href');
             });
-
-        #$articleUrls = array_merge($articleUrls, $newArticleUrls);
+        $articleUrls = array_merge($articleUrls, $newArticleUrls);
     }
 
 }
